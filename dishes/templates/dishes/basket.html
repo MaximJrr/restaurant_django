@@ -1,0 +1,57 @@
+{% load static %}
+{% if baskets %}
+    <head>
+        <link rel="stylesheet" href="{% static 'css/basket.css' %}">
+    </head>
+    <div class="wrap cf">
+      <h1 class="projTitle">Responsive Table<span>-Less</span> Shopping Cart</h1>
+      <div class="heading cf">
+        <h1>My Cart</h1>
+        <a href="#" class="continue">Continue Shopping</a>
+      </div>
+      <div class="cart">
+        <ul class="cartWrap">
+          <li class="items odd">
+
+        <div class="infoWrap">
+            {% for basket in baskets %}
+                <div class="cartSection">
+                <img src="http://lorempixel.com/output/technics-q-c-300-300-4.jpg" alt="" class="itemImg" />
+                  <p class="itemNumber">#QUE-007544-002</p>
+                  <h3>{{ basket.dish.name }}</h3>
+
+                   <p> <input type="text"  class="qty" placeholder="{{ basket.quantity }}"/></p>
+
+                  <p class="stockStatus"> Всего</p>
+                </div>
+                <div class="prodTotal cartSection">
+                  <p>{{ basket.sum }} руб.</p>
+                </div>
+                      <div class="cartSection removeWrap">
+                   <a href="{% url 'dishes:basket_remove' basket.id %}" class="remove">x</a>
+                </div>
+              </div>
+            </li>
+            {% endfor %}
+
+          <!--<li class="items even">Item 2</li>-->
+
+        </ul>
+      </div>
+
+      <div class="promoCode"><label for="promo">Have A Promo Code?</label><input type="text" name="promo" placholder="Enter Code" />
+      <a href="#" class="btn"></a></div>
+
+      <div class="subtotal cf">
+        <ul>
+            <li class="totalRow final"><span class="label">Total quantity</span><span class="value">{{ total_quantity}}</span></li>
+            <li class="totalRow final"><span class="label">Total</span><span class="value">{{ total_sum }}</span></li>
+          <li class="totalRow"><a href="#" class="btn continue">Checkout</a></li>
+        </ul>
+      </div>
+    </div>
+{% else %}
+    <h4 class="mt-3 mb-3 text-center">
+        Корзина пуста
+    </h4>
+{% endif %}

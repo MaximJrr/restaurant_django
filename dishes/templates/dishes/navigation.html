@@ -1,0 +1,45 @@
+{% load static %}
+<nav class="fh5co-nav" role="navigation">
+     <div class="top-menu">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12 text-center logo-wrap">
+                    <div id="fh5co-logo"><a href="index.html">Tasty<span>.</span></a></div>
+                </div>
+                <div class="col-xs-12 text-center menu-1 menu-wrap">
+                    <ul>
+                        <li class="active"><a href="{% url 'index' %}">Home</a></li>
+                        <li><a href="{% url 'dishes:index' %}">Menu</a></li>
+                        <li class="has-dropdown">
+                            <a href="gallery.html">Gallery</a>
+                            <ul class="dropdown">
+                                <li><a href="#">Events</a></li>
+                                <li><a href="#">Food</a></li>
+                                <li><a href="#">Coffees</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="reservation.html">Reservation</a></li>
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                        {% if user.is_authenticated %}
+                            <li class="has-dropdown">
+                                <a href="{% url 'users:basket' %}">BASKET</a>
+                                <ul class="dropdown">
+                                    <li><a href="{% url 'users:logout' %}">Sign out</a></li>
+                                </ul>
+                            </li>
+                        {% else %}
+                            <li class="has-dropdown">
+                                <a href="{% url 'users:login' %}">Sign in</a>
+                                <ul class="dropdown">
+                                    <li><a href="{% url 'users:register' %}">Create account</a></li>
+                                </ul>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+     </div>
+</nav>
