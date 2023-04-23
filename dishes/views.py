@@ -1,9 +1,9 @@
-from django.shortcuts import HttpResponseRedirect
-
 from django.contrib.auth.decorators import login_required
-from django.views.generic import TemplateView, ListView
-from dishes.models import Dish, Basket
+from django.shortcuts import HttpResponseRedirect
+from django.views.generic import ListView, TemplateView
+
 from common.views import TitleMixin
+from dishes.models import Basket, Dish
 
 
 class IndexView(TitleMixin, TemplateView):

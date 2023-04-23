@@ -27,6 +27,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+DOMAIN_NAME = 'http://localhost:8000'
 
 # Application definition
 
@@ -139,3 +140,11 @@ AUTH_USER_MODEL = 'users.User' # Глобальное переопределен
 LOGIN_URL = '/users/login'
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
+
+# Sending emails
+
+EMAIL_HOST = 'smtp.yandex.ru'
+EMAIL_PORT = 465
+EMAIL_HOST_USER = 'maximchukavovm@yandex.ru'
+EMAIL_HOST_PASSWORD = 'OrigiN237'
+EMAIL_USE_SSL = True
