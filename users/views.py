@@ -1,15 +1,16 @@
 from django.contrib import auth
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.views import LoginView
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
-from django.urls import reverse_lazy, reverse
-from django.contrib.auth.decorators import login_required
-from dishes.models import Basket
-from users.models import User
-from django.contrib.auth.views import LoginView
-from users.forms import UserLoginForm, UserRegistrationForm
+from django.urls import reverse, reverse_lazy
+from django.views.generic import TemplateView
 from django.views.generic.edit import CreateView
+
 from common.views import TitleMixin
-from django.contrib.messages.views import SuccessMessageMixin
+from dishes.models import Basket
+from users.forms import UserLoginForm, UserRegistrationForm
+from users.models import EmailVerification, User
 
 
 class UserLoginView(TitleMixin, LoginView):
@@ -24,6 +25,23 @@ class UserRegisterView(TitleMixin, CreateView):
     template_name = 'users/register.html'
     success_url = reverse_lazy('users:login')
     success_message = 'Регистрация прошла успешно'
+
+
+class EmailVerificationView(TitleMixin, TemplateView):
+    title = 'Подтверждение электронной почты'
+    template_name = 'users/email_verification.html'
+
+    def get(self, request, *args, **kwargs):
+        unique_code = kwargs['unique_code']
+        user = User.objects.get(email=kwargs['email'])
+        email_verifications = EmailVerification.objects.filter(user=user, unique_code=unique_code)
+
+        if email_verifications.exists() and not email_verifications.last().is_expired():
+            user.is_verified_email = True
+            user.save()
+            return super(EmailVerificationView, self).get(request, *args, **kwargs)
+        else:
+            return HttpResponseRedirect(reverse('index'))
 
 
 def logout(request):
@@ -43,6 +61,3 @@ def basket(request):
         'total_quantity': total_quantity,
     }
     return render(request, 'dishes/basket.html', context)
-
-
-    
