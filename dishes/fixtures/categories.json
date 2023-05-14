@@ -1,0 +1,10 @@
+[
+  {
+    "model": "dishes.dishcategory",
+    "pk": 2,
+    "fields": {
+      "name": "Горячее",
+      "description": "Описание горячего"
+    }
+  }
+]
