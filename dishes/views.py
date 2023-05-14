@@ -1,9 +1,13 @@
 from django.contrib.auth.decorators import login_required
+from django.forms import model_to_dict
 from django.shortcuts import HttpResponseRedirect
 from django.views.generic import ListView, TemplateView
+from rest_framework import generics
+from rest_framework.response import Response
+from rest_framework.views import APIView
 
 from common.views import TitleMixin
-from dishes.models import Basket, Dish
+from dishes.models import Basket, Dish, DishCategory
 
 
 class IndexView(TitleMixin, TemplateView):
@@ -18,23 +22,15 @@ class DishesListView(TitleMixin, ListView):
     paginate_by = 1
     title = 'Restaurant - menu'
 
-    # def get_context_data(self, *, object_list=None, **kwargs):
-    #     context = super(DishesListView, self).get_context_data()
-    #     context['title'] = 'Menu'
-    #     return context
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super(DishesListView, self).get_context_data()
+        context['title'] = 'Menu'
+        return context
 
 
 @login_required
 def basket_add(request, dish_id):
-    dish = Dish.objects.get(id=dish_id)
-    baskets = Basket.objects.filter(user=request.user, dish=dish)
-
-    if not baskets.exists():
-        Basket.objects.create(user=request.user, dish=dish, quantity=1)
-    else:
-        basket = baskets.first()
-        basket.quantity += 1
-        basket.save()
+    Basket.add_or_update_basket(dish_id, request.user)
     return HttpResponseRedirect(request.META['HTTP_REFERER'])
 
 
@@ -43,4 +39,7 @@ def basket_remove(request, basket_id):
     basket = Basket.objects.get(id=basket_id)
     basket.delete()
     return HttpResponseRedirect(request.META['HTTP_REFERER'])
+
+
+
 

@@ -1,0 +1,24 @@
+[
+  {
+    "model": "dishes.dish",
+    "pk": 1,
+    "fields": {
+      "name": "Борщ",
+      "description": "Описание борща",
+      "price": "300.000",
+      "image": "dishes_images/2dc069ab525f28802a54c7e12f1a9ba01721d8a0_full_Nz9OxAn.jpg",
+      "category": 2
+    }
+  },
+  {
+    "model": "dishes.dish",
+    "pk": 2,
+    "fields": {
+      "name": "Пицца",
+      "description": "Описание пиццы",
+      "price": "500.000",
+      "image": "dishes_images/photo_2022-02-28_13-43-46.jpg",
+      "category": 2
+    }
+  }
+]
