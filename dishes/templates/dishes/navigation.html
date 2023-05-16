@@ -8,8 +8,8 @@
                 </div>
                 <div class="col-xs-12 text-center menu-1 menu-wrap">
                     <ul>
-                        <li class="active"><a href="{% url 'index' %}">Главная</a></li>
-                        <li><a href="{% url 'dishes:index' %}">Меню</a></li>
+                        <li {% if request.resolver_match.view_name == 'index' %}class="active"{% endif %}><a href="{% url 'index' %}">Главная</a></li>
+                        <li {% if request.resolver_match.view_name == 'dishes:index' %}class="active"{% endif %}><a href="{% url 'dishes:index' %}">Меню</a></li>
                         <li><a href="reservation.html">Резервация</a></li>
                         <li><a href="contact.html">Контакты</a></li>
                         {% if user.is_authenticated %}
