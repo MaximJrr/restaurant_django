@@ -8,22 +8,13 @@
                 </div>
                 <div class="col-xs-12 text-center menu-1 menu-wrap">
                     <ul>
-                        <li class="active"><a href="{% url 'index' %}">Home</a></li>
-                        <li><a href="{% url 'dishes:index' %}">Menu</a></li>
-                        <li class="has-dropdown">
-                            <a href="gallery.html">Gallery</a>
-                            <ul class="dropdown">
-                                <li><a href="#">Events</a></li>
-                                <li><a href="#">Food</a></li>
-                                <li><a href="#">Coffees</a></li>
-                            </ul>
-                        </li>
-                        <li><a href="reservation.html">Reservation</a></li>
-                        <li><a href="about.html">About</a></li>
-                        <li><a href="contact.html">Contact</a></li>
+                        <li class="active"><a href="{% url 'index' %}">Главная</a></li>
+                        <li><a href="{% url 'dishes:index' %}">Меню</a></li>
+                        <li><a href="reservation.html">Резервация</a></li>
+                        <li><a href="contact.html">Контакты</a></li>
                         {% if user.is_authenticated %}
                             <li class="has-dropdown">
-                                <a href="{% url 'users:basket' %}">BASKET</a>
+                                <a href="{% url 'users:basket' %}">Корзина</a>
                                 <ul class="dropdown">
                                     <li><a href="{% url 'orders:orders-list' %}">Мои заказы</a></li>
                                     <li><a href="{% url 'users:logout' %}">Выйти</a></li>
