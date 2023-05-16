@@ -11,11 +11,13 @@ from dishes.models import Basket, Dish, DishCategory
 
 
 class IndexView(TitleMixin, TemplateView):
+    active_section = 'index'
     template_name = 'dishes/index.html'
     title = 'Restaurant'
 
 
 class DishesListView(TitleMixin, ListView):
+    active_section = 'menu'
     model = Dish
     template_name = 'dishes/menu.html'
     context_object_name = 'dishes'
