@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 
-from users.models import User
+from users.models import User, Reservation
 from users.tasks import send_email_verification
 
 
@@ -40,9 +40,17 @@ class UserRegistrationForm(UserCreationForm):
         return user
 
 
+class ReservationForm(forms.ModelForm):
+    name = forms.CharField(widget=forms.TextInput(attrs={
+        'class': 'form-control py 4', 'placeholder': 'Введите имя'}))
+    how_many_people = forms.IntegerField(widget=forms.NumberInput(attrs={
+        'class': 'form-control py 4', 'placeholder': 'Введите кол-во гостей'}))
+    date_time = forms.DateTimeField(widget=forms.DateTimeInput(attrs={
+        'class': 'form-control py 4', 'placeholder': '05/25/2023 13:00'}))
 
-
-
+    class Meta:
+        model = Reservation
+        fields = ['name', 'how_many_people', 'date_time']
 
 
 

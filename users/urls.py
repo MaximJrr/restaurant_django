@@ -1,7 +1,7 @@
 from django.urls import path
 
 from users.views import (EmailVerificationView, UserLoginView,
-                         UserRegisterView, basket, logout)
+                         UserRegisterView, basket, logout, ReservationView)
 
 app_name = 'users'
 
@@ -11,4 +11,5 @@ urlpatterns = [
     path('logout/', logout, name='logout'),
     path('basket', basket, name='basket'),
     path('email_verification/<str:email>/<uuid:unique_code>/', EmailVerificationView.as_view(), name='email_verification'),
+    path('reservation', ReservationView.as_view(), name='reservation'),
 ]
