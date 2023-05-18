@@ -1,0 +1,48 @@
+{% extends 'dishes/base.html' %}
+{% block content %}
+	<div id="fh5co-reservation-form" class="fh5co-section">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12 fh5co-heading animate-box">
+					<h2>Reservation</h2>
+					<div class="row">
+						<div class="col-md-6">
+							<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis ab debitis sit itaque totam, a maiores nihil, nulla magnam porro minima officiis! Doloribus aliquam voluptates corporis et tempora consequuntur ipsam, itaque, nesciunt similique commodi omnis. Ad magni perspiciatis, voluptatum repellat.</p>
+						</div>
+					</div>
+				</div>
+
+				<div class="col-md-6 col-md-push-6 col-sm-6 col-sm-push-6">
+					<form action="{% url 'users:reservation' %}" method="post" id="form-wrap">
+						{% csrf_token %}
+						<div class="row form-group">
+							<div class="col-md-12">
+								<label for="{{ form.name.id_for_label }}">Имя:</label>
+								{{ form.name }}
+							</div>
+						</div>
+						<div class="row form-group">
+							<div class="col-md-12">
+								<label for="{{ form.how_many_people.id_for_label }}">Количество мест:</label>
+								{{ form.how_many_people }}
+							</div>
+						</div>
+						<div class="row form-group">
+							<div class="col-md-12">
+								<label for="{{ form.date_time.id_for_label }}">Дата и время:</label>
+								{{ form.date_time }}
+							</div>
+						</div>
+						<div class="row form-group">
+							<div class="col-md-12">
+								<input type="submit" class="btn btn-primary btn-outline btn-lg" value="Забронировать">
+							</div>
+						</div>
+
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}
+

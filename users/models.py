@@ -42,3 +42,11 @@ class EmailVerification(models.Model):
         verbose_name_plural = 'Проверка электронной почты'
 
 
+class Reservation(models.Model):
+    name = models.CharField(max_length=100)
+    how_many_people = models.IntegerField(default=0)
+    date_time = models.DateTimeField()
+
+    class Meta:
+        verbose_name = 'Бронирование'
+        verbose_name_plural = 'Бронирование'
