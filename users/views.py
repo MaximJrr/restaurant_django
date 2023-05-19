@@ -32,6 +32,17 @@ class ReservationView(CreateView):
     form_class = ReservationForm
     success_url = reverse_lazy('dishes:index')
 
+    def form_valid(self, form):
+        table_number = form.cleaned_data['table_number']
+        date_time = form.cleaned_data['date_time']
+        reservations = Reservation.objects.filter(date_time=date_time, table_number=table_number)
+
+        if reservations.exists():
+            message = "Данное место на указанное время уже занято, выберите другое место, или время"
+            return render(self.request, self.template_name, {'form': form, 'message': message})
+        else:
+            return super().form_valid(form)
+
 
 class ReservationVerification(TemplateView):
     template_name = 'users/reservation_verification.html'

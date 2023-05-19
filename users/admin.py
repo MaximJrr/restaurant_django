@@ -19,5 +19,5 @@ class EmailVerificationAdmin(admin.ModelAdmin):
 
 @admin.register(Reservation)
 class VerificationAdmin(admin.ModelAdmin):
-    list_display = ['name', 'how_many_people', 'date_time']
+    list_display = ['name', 'how_many_people', 'table_number', 'time_create', 'date_time']
 

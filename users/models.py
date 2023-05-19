@@ -1,6 +1,7 @@
 from django.conf import settings
 from django.contrib.auth.models import AbstractUser
 from django.core.mail import send_mail
+from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 from django.urls import reverse
 from django.utils.timezone import now
@@ -46,6 +47,11 @@ class Reservation(models.Model):
     name = models.CharField(max_length=100)
     how_many_people = models.IntegerField(default=0)
     date_time = models.DateTimeField()
+    time_create = models.DateTimeField(auto_now_add=True, null=True)
+    table_number = models.IntegerField(default=0, validators=[MinValueValidator(1), MaxValueValidator(10)])
+
+    def __str__(self):
+        return f'Забронировал: {self.name} | Количество мест: {self.how_many_people} | Номер столика: {self.table_number} | Забронировано в: {self.time_create} | Дата и время: {self.date_time}'
 
     class Meta:
         verbose_name = 'Бронирование'
