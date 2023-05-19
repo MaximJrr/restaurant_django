@@ -46,7 +46,7 @@ class ReservationForm(forms.ModelForm):
     how_many_people = forms.IntegerField(widget=forms.NumberInput(attrs={
         'class': 'form-control py 4', 'placeholder': 'Введите кол-во гостей'}))
     date_time = forms.DateTimeField(widget=forms.DateTimeInput(attrs={
-        'class': 'form-control py 4', 'placeholder': '05/25/2023 13:00'}))
+        'class': 'form-control py 4', 'placeholder': '19/05/2023 13:00'}))
 
     class Meta:
         model = Reservation
