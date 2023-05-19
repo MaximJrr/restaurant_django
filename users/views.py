@@ -32,8 +32,9 @@ class ReservationView(CreateView):
     form_class = ReservationForm
     success_url = reverse_lazy('dishes:index')
 
-    def form_valid(self, form):
-        return super().form_valid(form)
+
+class ReservationVerification(TemplateView):
+    template_name = 'users/reservation_verification.html'
 
 
 class EmailVerificationView(TitleMixin, TemplateView):
@@ -63,23 +64,4 @@ def basket(request):
     return render(request, 'dishes/basket.html')
 
 
-# def reservation(request):
-#     if request.method == 'POST':
-#         form = ReservationForm(request.POST)
-#         if form.is_valid():
-#             client_name = form.cleaned_data['client_name']
-#             number_of_quests = form.cleaned_data['number_of_quests']
-#             date_and_time = form.cleaned_data['date_and_time']
-#
-#             reservation = Reservation(
-#                 name=client_name,
-#                 how_many_people=number_of_quests,
-#                 date_time=date_and_time
-#             )
-#             reservation.save()
-#             return redirect('users:email_verification')
-#         else:
-#             form = ReservationForm()
-#     form = ReservationForm()
-#     return render(request, 'users/reservation.html', {'form': form})
 

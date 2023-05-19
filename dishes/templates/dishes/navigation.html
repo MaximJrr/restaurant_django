@@ -10,7 +10,7 @@
                     <ul>
                         <li {% if request.resolver_match.view_name == 'index' %}class="active"{% endif %}><a href="{% url 'index' %}">Главная</a></li>
                         <li {% if request.resolver_match.view_name == 'dishes:index' %}class="active"{% endif %}><a href="{% url 'dishes:index' %}">Меню</a></li>
-                        <li><a href="{% url 'users:reservation' %}">Резервация</a></li>
+                        <li><a href="{% url 'users:reservation' %}">Бронирование</a></li>
                         <li><a href="contact.html">Контакты</a></li>
                         {% if user.is_authenticated %}
                             <li class="has-dropdown">
