@@ -47,10 +47,15 @@ class ReservationForm(forms.ModelForm):
         'class': 'form-control py 4', 'placeholder': 'Введите кол-во гостей'}))
     date_time = forms.DateTimeField(widget=forms.DateTimeInput(attrs={
         'class': 'form-control py 4', 'placeholder': '19/05/2023 13:00'}))
+    table_number = forms.IntegerField(widget=forms.NumberInput(attrs={
+        'class': 'form-control py 4', 'placeholder': 'Введите номер столика'}))
 
     class Meta:
         model = Reservation
-        fields = ['name', 'how_many_people', 'date_time']
+        fields = ['name', 'how_many_people', 'table_number', 'date_time']
+        read_only = ['time_create']
+
+
 
 
 
