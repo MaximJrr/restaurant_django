@@ -23,6 +23,7 @@ class Dish(models.Model):
     name = models.CharField(max_length=100)
     description = models.TextField()
     price = models.DecimalField(max_digits=12, decimal_places=3)
+    weight = models.IntegerField(blank=True, null=True)
     image = models.ImageField(upload_to='dishes_images', blank=True)
     category = models.ForeignKey(to=DishCategory, on_delete=models.CASCADE)
     stripe_price_id = models.CharField(max_length=128, null=True, blank=True)

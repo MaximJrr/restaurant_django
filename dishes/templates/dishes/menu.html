@@ -26,6 +26,7 @@
 							<img src="{{ dish.image.url }}" class="img-responsive" alt="image-error">
 							<h3>{{ dish.name }}</h3>
 							<span class="fh5co-price">{{ dish.price|floatformat:"0"|intcomma }} руб.<sup></sup></span>
+							<span class="fh5co-price">{{ dish.weight }} г<sup></sup></span>
 							<p>{{ dish.description }}</p>
 							<a class="btn btn-outline-success"
 							   href="{% url 'dishes:basket_add' dish.id %}">
