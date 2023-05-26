@@ -32,7 +32,8 @@ class DishesListView(TitleMixin, ListView):
 
 @login_required
 def basket_add(request, dish_id):
-    Basket.add_or_update_basket(dish_id, request.user)
+    dish = Dish.objects.get(id=dish_id)
+    Basket.add_or_update_basket(dish, request.user)
     return HttpResponseRedirect(request.META['HTTP_REFERER'])
 
 
