@@ -1,6 +1,8 @@
+
 from django.contrib.auth.decorators import login_required
 from django.forms import model_to_dict
-from django.shortcuts import HttpResponseRedirect
+from django.http import JsonResponse
+from django.shortcuts import HttpResponseRedirect, get_object_or_404
 from django.views.generic import ListView, TemplateView
 from rest_framework import generics
 from rest_framework.response import Response
@@ -42,6 +44,32 @@ def basket_remove(request, basket_id):
     basket = Basket.objects.get(id=basket_id)
     basket.delete()
     return HttpResponseRedirect(request.META['HTTP_REFERER'])
+
+
+def update_basket_quantity(request, basket_id):
+    basket = get_object_or_404(Basket, id=basket_id)
+
+    if request.method == 'POST':
+        quantity = int(request.POST.get('quantity'))
+        basket.quantity = quantity
+        basket.total_price = int(basket.sum())
+        basket.save()
+
+        baskets = Basket.objects.filter(user=request.user)
+        total_quantity = baskets.total_quantity()
+        total_price_sum = int(baskets.total_sum())
+
+        response_data = {
+            'message': 'Количество блюд и итоговая цена успешно обновлены',
+            'quantity': basket.quantity,
+            'total_price_item': basket.total_price,
+            'total_quantity': total_quantity,
+            'total_price_sum': total_price_sum,
+        }
+        return JsonResponse(response_data)
+
+    response_data = {'error': 'Произошла ошибка при обновлении количества блюд и итоговой цены'}
+    return JsonResponse(response_data, status=400)
 
 
 
