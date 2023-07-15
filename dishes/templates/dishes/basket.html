@@ -2,55 +2,65 @@
 {% if baskets %}
 {% load humanize %}
 
-    <head>
-        <link rel="stylesheet" href="{% static 'css/basket.css' %}">
-    </head>
-    <div class="wrap cf">
-      <h1 class="projTitle">Responsive Table<span>-Less</span> Shopping Cart</h1>
-      <div class="heading cf">
-        <h1>My Cart</h1>
-        <a href="{% url 'dishes:index' %}" class="continue">Continue Shopping</a>
-      </div>
-      <div class="cart">
-        <ul class="cartWrap">
-          <li class="items odd">
-
-        <div class="infoWrap">
-            {% for basket in baskets %}
-                <div class="cartSection">
-                <img src="{{ dish.image.url }}" alt="image not found" class="itemImg" />
-                  <h3>{{ basket.dish.name }}</h3>
-
-                   <p> <input type="text"  class="qty" placeholder="{{ basket.quantity }} шт."/></p>
-
-                  <p class="stockStatus"> Всего</p>
+<head>
+    <link rel="stylesheet" href="{% static 'css/basket.css' %}">
+</head>
+<div class="wrap cf">
+  <h1 class="projTitle">Responsive Table<span>-Less</span> Shopping Cart</h1>
+  <div class="heading cf">
+    <h1>My Cart</h1>
+    <a href="{% url 'dishes:index' %}" class="continue">Continue Shopping</a>
+  </div>
+  <div class="cart-wrap">
+    <div class="cart">
+      <ul class="cart-items">
+        {% for basket in baskets %}
+        <li class="cart-item" data-basket-id="{{ basket.id }}">
+          <div class="item-info">
+            <div class="item-img">
+              <img src="{{ basket.dish.image.url }}" alt="image not found" class="itemImg" />
+            </div>
+              <div class="item-details">
+                <h3>{{ basket.dish.name }}</h3>
+                <div class="item-quantity">
+                  <input type="number" class="qty update-quantity" min="1" max="10" value="{{ basket.quantity }}" data-basket-id="{{ basket.id }}" />
                 </div>
-                <div class="prodTotal cartSection">
-                  <p>{{ basket.sum|floatformat:"0"|intcomma }} руб.</p>
-                </div>
-                      <div class="cartSection removeWrap">
-                   <a href="{% url 'dishes:basket_remove' basket.id %}" class="remove">x</a>
+                <div class="item-total" data-basket-id="{{ basket.id }}">
+                  <p class="item-price item-price-{{ basket.id }}">{{ basket.sum|floatformat:"0"|intcomma }} руб.</p>
                 </div>
               </div>
-            </li>
-            {% endfor %}
+          </div>
+          <div class="item-remove">
+            <a href="{% url 'dishes:basket_remove' basket.id %}" class="remove">x</a>
+          </div>
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
 
-        </ul>
+    <div class="cart-total">
+      <div class="total-row">
+        <span class="label">Total quantity:</span>
+        <span class="value total-quantity">{{ baskets.total_quantity }} шт.</span>
       </div>
-
-      <div class="promoCode"><label for="promo">Have A Promo Code?</label><input type="text" name="promo" placholder="Enter Code" />
-      <a href="#" class="btn"></a></div>
-
-      <div class="subtotal cf">
-        <ul>
-            <li class="totalRow final"><span class="label">Total quantity: </span><span class="value">{{ baskets.total_quantity}} шт.</span></li>
-            <li class="totalRow final"><span class="label">Total: </span><span class="value">{{ baskets.total_sum|floatformat:"0"|intcomma }} руб.</span></li>
-          <li class="totalRow"><a href="{% url 'orders:order-create' %}" class="btn continue">Заказать</a></li>
-        </ul>
+      <div class="total-row final">
+        <span class="label">Total:</span>
+        <span class="value total-price">{{ baskets.total_sum|floatformat:"0"|intcomma }} руб.</span>
+      </div>
+      <div class="order-button">
+        <form method="post" action="{% url 'orders:order-create' %}">
+          {% csrf_token %}
+          <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+          <button type="submit" class="btn continue">Заказать</button>
+        </form>
       </div>
     </div>
+  </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="{% static 'js/basket.js' %}"></script>
 {% else %}
-    <h4 class="mt-3 mb-3 text-center">
-        Корзина пуста
-    </h4>
+<h4 class="mt-3 mb-3 text-center">
+    Корзина пуста
+</h4>
 {% endif %}

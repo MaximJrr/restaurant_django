@@ -19,7 +19,7 @@ from django.contrib import admin
 from django.urls import include, path
 from rest_framework.authtoken import views
 
-from dishes.views import IndexView
+from dishes.views import IndexView, update_basket_quantity
 from orders.views import stripe_webhook_view
 
 urlpatterns = [
@@ -31,7 +31,8 @@ urlpatterns = [
     path('orders/', include('orders.urls', namespace='orders')),
     path('webhook/stripe/', stripe_webhook_view, name='stripe_webhook'),
     path('api/', include('api.urls', namespace='api')),
-    path('api-token-auth/', views.obtain_auth_token)
+    path('api-token-auth/', views.obtain_auth_token),
+    path('update_basket_quantity/<int:basket_id>/', update_basket_quantity, name='update_basket_quantity'),
 ]
 
 
