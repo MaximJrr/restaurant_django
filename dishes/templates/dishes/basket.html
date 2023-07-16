@@ -30,9 +30,10 @@
                 </div>
               </div>
           </div>
-          <div class="item-remove">
-            <a href="{% url 'dishes:basket_remove' basket.id %}" class="remove">x</a>
-          </div>
+          <form method="POST" action="{% url 'dishes:basket_remove' basket.id %}">
+            {% csrf_token %}
+            <button type="submit" class="remove">Remove</button>
+          </form>
         </li>
         {% endfor %}
       </ul>
