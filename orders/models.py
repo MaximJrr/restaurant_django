@@ -15,7 +15,7 @@ class Order(models.Model):
         (ON_WAY, 'В пути'),
         (DELIVERED, 'Доставлен'),
     )
-
+    id = models.AutoField(primary_key=True)
     first_name = models.CharField(max_length=64)
     last_name = models.CharField(max_length=64)
     email = models.EmailField(max_length=64)
