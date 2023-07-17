@@ -48,22 +48,21 @@ class OrderCreateView(CreateView):
     form_class = OrderForm
     success_url = reverse_lazy('orders:order-create')
 
-    def post(self, request, *args, **kwargs):
-        super(OrderCreateView, self).post(request, *args, **kwargs)
+    def form_valid(self, form):
+        form.instance.initiator = self.request.user
+        self.object = form.save()
+
         baskets = Basket.objects.filter(user=self.request.user)
+        order = self.object
 
         checkout_session = stripe.checkout.Session.create(
             line_items=baskets.stripe_products(),
-            metadata={'order_id': self.object.id},
+            metadata={'order_id': order.id},
             mode='payment',
             success_url='{}{}'.format(settings.DOMAIN_NAME, reverse('orders:order-success')),
             cancel_url='{}{}'.format(settings.DOMAIN_NAME, reverse('orders:order-cancel')),
         )
         return HttpResponseRedirect(checkout_session.url, status=HTTPStatus.SEE_OTHER)
-
-    def form_valid(self, form):
-        form.instance.initiator = self.request.user
-        return super(OrderCreateView, self).form_valid(form)
 
 
 @csrf_exempt
