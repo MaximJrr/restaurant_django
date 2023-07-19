@@ -1,7 +1,7 @@
 
 from django.contrib.auth.decorators import login_required
 from django.forms import model_to_dict
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponseNotFound
 from django.shortcuts import HttpResponseRedirect, get_object_or_404
 from django.views.generic import ListView, TemplateView
 from rest_framework import generics
@@ -71,6 +71,9 @@ def update_basket_quantity(request, basket_id):
     response_data = {'error': 'Произошла ошибка при обновлении количества блюд и итоговой цены'}
     return JsonResponse(response_data, status=400)
 
+
+def pageNotFound(request, exception):
+    return HttpResponseNotFound('<h1>Страница не найдена!</h1>')
 
 
 
