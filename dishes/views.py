@@ -1,15 +1,11 @@
-
 from django.contrib.auth.decorators import login_required
-from django.forms import model_to_dict
+
 from django.http import JsonResponse, HttpResponseNotFound
 from django.shortcuts import HttpResponseRedirect, get_object_or_404
 from django.views.generic import ListView, TemplateView
-from rest_framework import generics
-from rest_framework.response import Response
-from rest_framework.views import APIView
 
 from common.views import TitleMixin
-from dishes.models import Basket, Dish, DishCategory
+from dishes.models import Basket, Dish
 
 
 class IndexView(TitleMixin, TemplateView):

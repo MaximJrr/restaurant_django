@@ -1,8 +1,9 @@
 from django.contrib import auth
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView
 from django.http import HttpResponseRedirect
-from django.shortcuts import render, redirect
+from django.shortcuts import render
 from django.urls import reverse, reverse_lazy
 from django.views.generic import TemplateView
 from django.views.generic.edit import CreateView
@@ -26,7 +27,7 @@ class UserRegisterView(TitleMixin, CreateView):
     success_message = 'Регистрация прошла успешно'
 
 
-class ReservationView(CreateView):
+class ReservationView(LoginRequiredMixin, CreateView):
     model = Reservation
     template_name = 'users/reservation.html'
     form_class = ReservationForm
