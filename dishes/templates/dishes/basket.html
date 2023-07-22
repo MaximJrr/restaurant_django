@@ -6,10 +6,9 @@
     <link rel="stylesheet" href="{% static 'css/basket.css' %}">
 </head>
 <div class="wrap cf">
-  <h1 class="projTitle">Responsive Table<span>-Less</span> Shopping Cart</h1>
+  <h1 class="projTitle">Моя корзина</h1>
   <div class="heading cf">
-    <h1>My Cart</h1>
-    <a href="{% url 'dishes:index' %}" class="continue">Continue Shopping</a>
+    <a href="{% url 'dishes:index' %}" class="continue">Вернуться в меню</a>
   </div>
   <div class="cart-wrap">
     <div class="cart">
@@ -32,7 +31,7 @@
           </div>
           <form method="POST" action="{% url 'dishes:basket_remove' basket.id %}">
             {% csrf_token %}
-            <button type="submit" class="remove">Remove</button>
+            <button type="submit" class="remove">Удалить</button>
           </form>
         </li>
         {% endfor %}
@@ -41,11 +40,11 @@
 
     <div class="cart-total">
       <div class="total-row">
-        <span class="label">Total quantity:</span>
+        <span class="label">Общее кол-во:</span>
         <span class="value total-quantity">{{ baskets.total_quantity }} шт.</span>
       </div>
       <div class="total-row final">
-        <span class="label">Total:</span>
+        <span class="label">Всего:</span>
         <span class="value total-price">{{ baskets.total_sum|floatformat:"0"|intcomma }} руб.</span>
       </div>
       <div class="order-button">
