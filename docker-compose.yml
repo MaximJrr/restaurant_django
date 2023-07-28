@@ -6,23 +6,27 @@ services:
     environment:
       POSTGRES_PASSWORD: OrigiN237
       POSTGRES_USER: restaurant_username
-      POSTGRES_DB: localhost
+      POSTGRES_DB: restaurant_db
     volumes:
       - postgres_data:/var/lib/postgresql/data/
-
+    networks:
+      - app_network
   restaurant:
     container_name: restaurant_app
     build: .
-    command: >
-      bash -c "sleep 10 &&
-               python /app/manage.py migrate --noinput &&
-               python /app/manage.py runserver 0.0.0.0:8000"
+    command: bash -c "python /app/manage.py migrate --noinput &&
+             python /app/manage.py runserver 0.0.0.0:8000"
     volumes:
       - .:/app
     ports:
       - "8000:8000"
     depends_on:
       - restaurant_db
+    networks:
+      - app_network
 
 volumes:
   postgres_data:
+
+networks:
+  app_network:
