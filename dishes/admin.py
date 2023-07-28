@@ -11,9 +11,8 @@ class DishAdmin(admin.ModelAdmin):
 
 
 @admin.register(DishCategory)
-class DishAdmin(admin.ModelAdmin):
+class DishCategoryAdmin(admin.ModelAdmin):
     list_display = ['name', 'description']
-    fields = ['stripe_price_id']
     search_fields = ['name']
     ordering = ['name']
 
