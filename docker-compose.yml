@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  restaurant_db:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_PASSWORD: OrigiN237
+      POSTGRES_USER: restaurant_username
+      POSTGRES_DB: localhost
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+
+  restaurant:
+    container_name: restaurant_app
+    build: .
+    command: >
+      bash -c "sleep 10 &&
+               python /app/manage.py migrate --noinput &&
+               python /app/manage.py runserver 0.0.0.0:8000"
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+    depends_on:
+      - restaurant_db
+
+volumes:
+  postgres_data:
