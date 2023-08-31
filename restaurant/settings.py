@@ -24,7 +24,7 @@ SECRET_KEY = 'django-insecure-=92bkulrpv7-+_^oieme)!)1pbs=g5!brqsy_=_ad*k8dhcq@%
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1']
 
 DOMAIN_NAME = 'http://127.0.0.1:8000'
 
@@ -110,9 +110,10 @@ DATABASES = {
         'USER': 'restaurant_username',
         'PASSWORD': 'OrigiN237',
         'HOST': 'localhost',
-        'PORT': '5432',
+        'PORT': 5432,
     }
 }
+
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
