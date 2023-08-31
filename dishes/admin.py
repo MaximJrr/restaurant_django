@@ -5,7 +5,7 @@ from dishes.models import Basket, Dish, DishCategory
 
 @admin.register(Dish)
 class DishAdmin(admin.ModelAdmin):
-    list_display = ['name', 'price', 'category']
+    list_display = ['id', 'name', 'price', 'category']
     search_fields = ['name']
     ordering = ['name']
 
