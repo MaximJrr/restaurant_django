@@ -30,10 +30,14 @@
 										<div class="slider-text-inner">
 											<div class="desc">
 												<h2>{{ dish.name }}</h2>
-												<p>{{ dish.description }}</p>
-												<span class="fh5co-price">{{ dish.weight }} г<sup></sup></span>
+												<p class="ingredients">{{ dish.description }}</p>
+												<span class="dish-weight">{{ dish.weight }} г /</span>
 												<span class="fh5co-price">{{ dish.price|floatformat:"0"|intcomma }} руб.<sup></sup></span>
 											</div>
+											<a class="dish-button"
+											   href="{% url 'dishes:basket_add' dish.id %}">
+												Добавить в корзину
+											</a>
 										</div>
 									</div>
 								</div>
