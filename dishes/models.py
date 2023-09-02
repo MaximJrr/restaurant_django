@@ -1,6 +1,7 @@
 import stripe
 from django.conf import settings
 from django.db import models
+from django.urls import reverse
 
 from users.models import User
 
@@ -17,6 +18,9 @@ class DishCategory(models.Model):
     class Meta:
         verbose_name = 'Категорию'
         verbose_name_plural = 'Категории'
+
+    def get_absolute_url(self):
+        return reverse('dishes:category', kwargs={'category_id': self.pk})
 
 
 class Dish(models.Model):
