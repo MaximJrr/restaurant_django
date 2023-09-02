@@ -13,7 +13,17 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-md-12 fh5co-heading animate-box">
-					<h2>Our Delicous Menu</h2>
+					<h2 class="menu-text">Меню ресторана</h2>
+				</div>
+				<div class="all-menu">
+					<div class="all-dishes">
+						<li><a href="{% url 'dishes:index' %}">Все блюда</a></li>
+					</div>
+					{% for category in categories %}
+						<div class="categories">
+							<li><a href="{{ category.get_absolute_url }}">{{ category.name }}</a></li>
+						</div>
+					{% endfor %}
 				</div>
 				{% for dish in dishes %}
 					<div class="col-md-3 col-sm-6 col-xs-6 col-xxs-12 fh5co-item-wrap">
@@ -25,14 +35,13 @@
 							<p>{{ dish.description }}</p>
 							<a class="btn btn-outline-success"
 							   href="{% url 'dishes:basket_add' dish.id %}">
-								Отправить в корзину
+								Добавить в корзину
 							</a>
 						</div>
 					</div>
 				{% endfor %}
 				<div class="products-container">
 					<ul class="product-list">
-						<!-- список продуктов -->
 					</ul>
 					{% if is_paginated %}
 						<nav aria-label="Page navigation example">

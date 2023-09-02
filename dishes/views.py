@@ -1,11 +1,11 @@
 from django.contrib.auth.decorators import login_required
 
 from django.http import JsonResponse, HttpResponseNotFound
-from django.shortcuts import HttpResponseRedirect, get_object_or_404
+from django.shortcuts import HttpResponseRedirect, get_object_or_404, render
 from django.views.generic import ListView
 
 from common.views import TitleMixin
-from dishes.models import Basket, Dish
+from dishes.models import Basket, Dish, DishCategory
 
 
 class IndexView(TitleMixin, ListView):
@@ -13,7 +13,6 @@ class IndexView(TitleMixin, ListView):
     template_name = 'dishes/index.html'
     title = 'Restaurant'
     model = Dish
-    context_object_name = 'dishes'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -28,6 +27,24 @@ class DishesListView(TitleMixin, ListView):
     context_object_name = 'dishes'
     paginate_by = 4
     title = 'Restaurant - menu'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['categories'] = DishCategory.objects.all()
+        return context
+
+
+def show_category(request, category_id):
+    dishes = Dish.objects.filter(category_id=category_id)
+    categories = DishCategory.objects.all()
+
+    context = {
+        'dishes': dishes,
+        'categories': categories,
+        'cat_selected': category_id,
+    }
+
+    return render(request, 'dishes/menu.html', context=context)
 
 
 @login_required
