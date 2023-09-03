@@ -10,6 +10,7 @@ stripe.api_key = settings.STRIPE_SECRET_KEY
 
 class DishCategory(models.Model):
     name = models.CharField(max_length=100, unique=True)
+    slug = models.SlugField(max_length=255, unique=True, verbose_name='URL')
     description = models.TextField()
 
     def __str__(self):
@@ -20,11 +21,12 @@ class DishCategory(models.Model):
         verbose_name_plural = 'Категории'
 
     def get_absolute_url(self):
-        return reverse('dishes:category', kwargs={'category_id': self.pk})
+        return reverse('dishes:category', kwargs={'category_slug': self.slug})
 
 
 class Dish(models.Model):
     name = models.CharField(max_length=100)
+    slug = models.SlugField(max_length=255, unique=True, verbose_name='URL')
     description = models.TextField()
     price = models.DecimalField(max_digits=12, decimal_places=3)
     weight = models.IntegerField(blank=True, null=True)

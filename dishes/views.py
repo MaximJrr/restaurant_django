@@ -34,14 +34,13 @@ class DishesListView(TitleMixin, ListView):
         return context
 
 
-def show_category(request, category_id):
-    dishes = Dish.objects.filter(category_id=category_id)
+def show_category(request, category_slug):
+    dishes = Dish.objects.filter(category__slug=category_slug)
     categories = DishCategory.objects.all()
 
     context = {
         'dishes': dishes,
         'categories': categories,
-        'cat_selected': category_id,
     }
 
     return render(request, 'dishes/menu.html', context=context)
