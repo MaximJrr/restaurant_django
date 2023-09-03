@@ -2,6 +2,7 @@ from django.contrib.auth.decorators import login_required
 
 from django.http import JsonResponse, HttpResponseNotFound
 from django.shortcuts import HttpResponseRedirect, get_object_or_404, render
+from django.views import View
 from django.views.generic import ListView
 
 from common.views import TitleMixin
@@ -34,16 +35,19 @@ class DishesListView(TitleMixin, ListView):
         return context
 
 
-def show_category(request, category_slug):
-    dishes = Dish.objects.filter(category__slug=category_slug)
-    categories = DishCategory.objects.all()
+class CategoryListView(View):
+    template_name = 'dishes/menu.html'
 
-    context = {
-        'dishes': dishes,
-        'categories': categories,
-    }
+    def get(self, request, category_slug):
+        dishes = Dish.objects.filter(category__slug=category_slug)
+        categories = DishCategory.objects.all()
 
-    return render(request, 'dishes/menu.html', context=context)
+        context = {
+            'dishes': dishes,
+            'categories': categories,
+        }
+
+        return render(request, self.template_name, context=context)
 
 
 @login_required
