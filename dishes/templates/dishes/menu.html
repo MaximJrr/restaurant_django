@@ -13,7 +13,7 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-md-12 fh5co-heading animate-box">
-					<h2 class="menu-text">Меню ресторана</h2>
+					<h1 class="menu-text">Меню ресторана</h1>
 				</div>
 				<div class="all-menu">
 					<div class="all-dishes">
@@ -25,40 +25,59 @@
 						</div>
 					{% endfor %}
 				</div>
-				{% for dish in dishes %}
-					<div class="col-md-3 col-sm-6 col-xs-6 col-xxs-12 fh5co-item-wrap">
-						<div class="fh5co-item animate-box">
-							<img src="{{ dish.image.url }}" class="img-responsive" alt="image-error">
-							<h3>{{ dish.name }}</h3>
-							<span class="fh5co-price">{{ dish.price|floatformat:"0"|intcomma }} руб.<sup></sup></span>
-							<span class="fh5co-price">{{ dish.weight }} г<sup></sup></span>
-							<p>{{ dish.description }}</p>
-							<a class="btn btn-outline-success"
-							   href="{% url 'dishes:basket_add' dish.id %}">
-								Добавить в корзину
-							</a>
-						</div>
-					</div>
-				{% endfor %}
-				<div class="products-container">
-					<ul class="product-list">
-					</ul>
-					{% if is_paginated %}
-						<nav aria-label="Page navigation example">
-							<ul class="pagination justify-content-center">
-								<li class="page-item {% if not page_obj.has_previous %} disabled {% endif %}">
-									<a class="page-link" href="{% if page_obj.has_previous %} {% url 'dishes:paginator' page_obj.previous_page_number %} {% else %} # {% endif %}" tabindex="-1" aria-disabled="true">Предыдущая</a>
+				<div class="row">
+                    {% for dish in dishes %}
+                        <div class="col-lg-4 col-md-6 mb-4">
+                        <div class="card h-100">
+                            <a href="#">
+                                <img class="card-img-top"
+                                     src="{{ dish.image.url }} "
+                                     alt="image-error">
+                            </a>
+                            <div class="card-body">
+                                <h4 class="card-title">
+									<h3 class="fh5co-price">{{ dish.name }}</h3>
+                                    <h2>{{ dish.description }}</h2>
+                                </h4>
+                                <span class="fh5co-price">{{ dish.price|floatformat:"0"|intcomma }} руб. /<sup></sup></span>
+								<span class="fh5co-price">{{ dish.weight }} г<sup></sup></span>-->
+                            </div>
+                            <div class="card-footer text-center">
+                                <a class="btn btn-outline-success"
+                                   href="{% url 'dishes:basket_add' dish.id %}">
+                                    Отправить в корзину
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+            	</div>
+				{% if is_paginated %}
+					<nav aria-label="Page navigation example">
+						<ul class="pagination justify-content-center">
+							<li class="page-item {% if not page_obj.has_previous %} disabled {% endif %}">
+								<a class="page-link"
+								   href="{% if page_obj.has_previous %} {% url 'dishes:paginator' page_obj.previous_page_number %} {% else %} # {% endif %}"
+								   tabindex="-1" aria-disabled="true">
+									Предыдущая
+								</a>
+							</li>
+							{% for page in paginator.page_range %}
+								<li class="page-item">
+									<a class="page-link" href="{% url 'dishes:paginator' page %}">
+									{{ page }}
+									</a>
 								</li>
-								{% for page in paginator.page_range %}
-									<li class="page-item"><a class="page-link" href="{% url 'dishes:paginator' page %}">{{ page }}</a></li>
-								{% endfor %}
-								<li class="page-item {% if not page_obj.has_next %} disabled {% endif %}">
-									<a class="page-link" href="{% if page_obj.has_next %} {% url 'dishes:paginator' page_obj.next_page_number %} {% else %} # {% endif %}">Слудующая</a>
-								</li>
-							</ul>
-						</nav>
-					{% endif %}
-				</div>
+							{% endfor %}
+							<li class="page-item {% if not page_obj.has_next %} disabled {% endif %}">
+								<a class="page-link"
+								   href="{% if page_obj.has_next %} {% url 'dishes:paginator' page_obj.next_page_number %} {% else %} # {% endif %}">
+									Следующая
+								</a>
+							</li>
+						</ul>
+					</nav>
+            	{% endif %}
 			</div>
 		</div>
 	</div>
