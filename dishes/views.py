@@ -26,7 +26,7 @@ class DishesListView(TitleMixin, ListView):
     model = Dish
     template_name = 'dishes/menu.html'
     context_object_name = 'dishes'
-    paginate_by = 4
+    paginate_by = 9
     title = 'Restaurant - menu'
 
     def get_context_data(self, **kwargs):
