@@ -3,22 +3,392 @@
     "model": "dishes.dish",
     "pk": 1,
     "fields": {
-      "name": "Борщ",
-      "description": "Описание борща",
-      "price": "300.000",
-      "image": "dishes_images/2dc069ab525f28802a54c7e12f1a9ba01721d8a0_full_Nz9OxAn.jpg",
-      "category": 2
+      "name": "Пицца",
+      "slug": "picca",
+      "description": "Мука, соль, сухие дрожжи, сахар, вода, чеснок, базилик, томаты, орегано, черный молотый перец, оливковое масло, моцарелла, маслины, руккола",
+      "price": "1200.000",
+      "weight": 280,
+      "image": "dishes_images/pitstsa_61_opiZ4N4.jpg",
+      "category": 7,
+      "stripe_price_id": "price_1NmDt5BWxgf1nsIVrcaEmvJx"
     }
   },
   {
     "model": "dishes.dish",
     "pk": 2,
     "fields": {
-      "name": "Пицца",
-      "description": "Описание пиццы",
+      "name": "Пицца мясная",
+      "slug": "picca-myasnaya",
+      "description": "Мука, сухие дрожжи, тёплая вода, соль, оливковое масло, чеснок, моцарелла, салями, ветчина, бекон, пряная колбаса, говяжий фарш, пармезан (или твердый сыр), томатная паста, базилик сушеный, орегано",
+      "price": "1500.000",
+      "weight": 250,
+      "image": "dishes_images/1617211274_29-p-pitstsa-myasnaya-krasivo-36_lZAmuGN.jpg",
+      "category": 7,
+      "stripe_price_id": "price_1NmHhMBWxgf1nsIVUbknug7a"
+    }
+  },
+  {
+    "model": "dishes.dish",
+    "pk": 3,
+    "fields": {
+      "name": "Американская пицца",
+      "slug": "amerikanskaya-picca",
+      "description": "Сухие дрожжи, сахар, соль, тёплая вода, оливковое масло, мука, томатный соус, ветчина, грибы, моцарелла, зеленый лук",
+      "price": "1400.000",
+      "weight": 270,
+      "image": "dishes_images/amerikanskaya_picca-387147_eaD1Ff6.jpg",
+      "category": 7,
+      "stripe_price_id": "price_1NmHnFBWxgf1nsIVh9xWTs8L"
+    }
+  },
+  {
+    "model": "dishes.dish",
+    "pk": 4,
+    "fields": {
+      "name": "Пицца по-русски",
+      "slug": "picca-po-russki",
+      "description": "Хлеб круглый, моцарелла, салями, сыр, сосиски, паста",
       "price": "500.000",
-      "image": "dishes_images/photo_2022-02-28_13-43-46.jpg",
-      "category": 2
+      "weight": 300,
+      "image": "dishes_images/picca_po-russki-313633_vEu7IUE.jpg",
+      "category": 7,
+      "stripe_price_id": "price_1NmHorBWxgf1nsIVqMHjvxfD"
+    }
+  },
+  {
+    "model": "dishes.dish",
+    "pk": 5,
+    "fields": {
+      "name": "Пицца по-баварски",
+      "slug": "picca-po-bavarski",
+      "description": "Тесто для пиццы дрожжевое, консервированные помидоры, чеснок, соль, сахар, специи, балык или ветчина, копченые колбаски, сыр, грибы, помидор, зелень",
+      "price": "1300.000",
+      "weight": 300,
+      "image": "dishes_images/picca_po-bavarski-399788_uOCdwfG.jpg",
+      "category": 7,
+      "stripe_price_id": "price_1NmHqMBWxgf1nsIVTOOJS3ND"
+    }
+  },
+  {
+    "model": "dishes.dish",
+    "pk": 6,
+    "fields": {
+      "name": "Итальянская тонкая пицца",
+      "slug": "italyanskaya-tonkaya-picca",
+      "description": "Мука пшеничная, вода, дрожжи сухие, соль, сахар, масло оливковое, помидоры (для соуса), чеснок, соль и специи (по вкусу), моцарелла, томаты (для начинки), базилик, болгарский перец, салями,",
+      "price": "1200.000",
+      "weight": 300,
+      "image": "dishes_images/italyanskaya_tonkaya_picca-420306_A8rQn0k.jpg",
+      "category": 7,
+      "stripe_price_id": "price_1NmZktBWxgf1nsIVv4Zmk56v"
+    }
+  },
+  {
+    "model": "dishes.dish",
+    "pk": 7,
+    "fields": {
+      "name": "Сок яблочный с мякотью",
+      "slug": "sok-yablochnyj-s-myakotyu",
+      "description": "Яблоки",
+      "price": "300.000",
+      "weight": 200,
+      "image": "dishes_images/sok_yablochnii_s_myakotiu-343411_GVPY3kG.jpg",
+      "category": 1,
+      "stripe_price_id": "price_1NnGXgBWxgf1nsIVDvELoZsY"
+    }
+  },
+  {
+    "model": "dishes.dish",
+    "pk": 8,
+    "fields": {
+      "name": "Сок томатный с мякотью",
+      "slug": "sok-tomatnyj-s-myakotyu",
+      "description": "Помидоры, соль",
+      "price": "400.000",
+      "weight": 200,
+      "image": "dishes_images/sok_tomatnii_s_myakotiu-808893_PPce1RL.jpg",
+      "category": 1,
+      "stripe_price_id": "price_1NnGfdBWxgf1nsIVJ3I2x1SR"
+    }
+  },
+  {
+    "model": "dishes.dish",
+    "pk": 9,
+    "fields": {
+      "name": "Апельсиново-грейпфрутовый сквош",
+      "slug": "apelsinovo-grejpfrutovyj-skvosh",
+      "description": "Вода, сахар тростниковый, апельсин, лимон, грейпфрут, мята, вода",
+      "price": "600.000",
+      "weight": 200,
+      "image": "dishes_images/apelsinovo-greipfrutovii_skvosh-791682_x4xd274.jpg",
+      "category": 1,
+      "stripe_price_id": "price_1NnGhQBWxgf1nsIV4kOzwIOh"
+    }
+  },
+  {
+    "model": "dishes.dish",
+    "pk": 10,
+    "fields": {
+      "name": "Глёг",
+      "slug": "glyog",
+      "description": "Сок черной смородины, корица, гвоздика, имбирь, кардамон, цедра апельсина, изюм, сахар, миндаль",
+      "price": "700.000",
+      "weight": 200,
+      "image": "dishes_images/glyog-694759_AkOagyS.jpeg",
+      "category": 1,
+      "stripe_price_id": "price_1NnGlUBWxgf1nsIVknlGKYyE"
+    }
+  },
+  {
+    "model": "dishes.dish",
+    "pk": 11,
+    "fields": {
+      "name": "Напиток из базилика",
+      "slug": "napitok-iz-bazilika",
+      "description": "Вода, синий базилик, сахар, лимон",
+      "price": "300.000",
+      "weight": 200,
+      "image": "dishes_images/napitok_iz_bazilika-59511_P3iv1B9.jpg",
+      "category": 1,
+      "stripe_price_id": "price_1NnH4aBWxgf1nsIVICt75Yxc"
+    }
+  },
+  {
+    "model": "dishes.dish",
+    "pk": 12,
+    "fields": {
+      "name": "Чай с тапиокой",
+      "slug": "chaj-s-tapiokoj",
+      "description": "Вода, чай зеленый листовой, мята свежая, лайм, шарики тапиоки, апельсины",
+      "price": "300.000",
+      "weight": 200,
+      "image": "dishes_images/chai_s_tapiokoi-693243_MEngYct.jpeg",
+      "category": 1,
+      "stripe_price_id": "price_1NnH5mBWxgf1nsIVAbvrSoW6"
+    }
+  },
+  {
+    "model": "dishes.dish",
+    "pk": 13,
+    "fields": {
+      "name": "Классический ванильный соус",
+      "slug": "klassicheskij-vanilnyj-sous",
+      "description": "Молоко, желток куриного яйца, сахар, соль, ваниль",
+      "price": "300.000",
+      "weight": 150,
+      "image": "dishes_images/klassicheskii_vanilnii_sous-795430_iiO4rL1.jpeg",
+      "category": 2,
+      "stripe_price_id": "price_1NnH7tBWxgf1nsIVASubViGD"
+    }
+  },
+  {
+    "model": "dishes.dish",
+    "pk": 14,
+    "fields": {
+      "name": "Соус \"Красный, острый\"",
+      "slug": "sous-krasnyj-ostryj",
+      "description": "Помидоры консервированные, перец болгарский красный, чеснок, острый перец, сахар, соль, черный молотый перец",
+      "price": "200.000",
+      "weight": 150,
+      "image": "dishes_images/sous_quotkrasnii_ostriiquot-804702_oqiV7bJ.jpg",
+      "category": 2,
+      "stripe_price_id": "price_1NnH9ZBWxgf1nsIVWSxg4Gg2"
+    }
+  },
+  {
+    "model": "dishes.dish",
+    "pk": 15,
+    "fields": {
+      "name": "Соус пикантный",
+      "slug": "sous-pikantnyj",
+      "description": "Красный помидор, зеленые помидоры, чеснок, лук репчатый, сухие перчики чили, соль",
+      "price": "300.000",
+      "weight": 150,
+      "image": "dishes_images/sous_pikantnii-415445_M4nn0cw.png",
+      "category": 2,
+      "stripe_price_id": "price_1NnHAfBWxgf1nsIVkJTQWIxr"
+    }
+  },
+  {
+    "model": "dishes.dish",
+    "pk": 16,
+    "fields": {
+      "name": "Соус белый основной",
+      "slug": "sous-belyj-osnovnoj",
+      "description": "Молоко, лук репчатый, лавровый лист, гвоздика, масло сливочное, мука пшеничная, перец черный молотый, соль",
+      "price": "300.000",
+      "weight": 150,
+      "image": "dishes_images/sous_belii_osnovnoi-412314_xgOl9Bh.jpg",
+      "category": 2,
+      "stripe_price_id": "price_1NnHBxBWxgf1nsIVII4QHGAq"
+    }
+  },
+  {
+    "model": "dishes.dish",
+    "pk": 17,
+    "fields": {
+      "name": "Суп из овощей и грибов",
+      "slug": "sup-iz-ovoshej-i-gribov",
+      "description": "Морковь, стебель сельдерея, репчатый лук, белокочанная капуста, шампиньоны, растительное масло, соль, помидоры, чеснок, орегано, овощной бульон, кукуруза консервированная",
+      "price": "800.000",
+      "weight": 250,
+      "image": "dishes_images/sup_iz_ovoshei_i_gribov-485055_VOpfdED.jpg",
+      "category": 3,
+      "stripe_price_id": "price_1NnHERBWxgf1nsIVuoTlEObD"
+    }
+  },
+  {
+    "model": "dishes.dish",
+    "pk": 18,
+    "fields": {
+      "name": "Овощной суп классический",
+      "slug": "ovoshnoj-sup-klassicheskij",
+      "description": "Вода, картофель, лук, морковь, помидор, цветная капуста, зеленый горошек, зелень, соль, сливочное масло.",
+      "price": "900.000",
+      "weight": 250,
+      "image": "dishes_images/ovoshnoi_sup_klassicheskii-327375_B3JVj0g.jpeg",
+      "category": 3,
+      "stripe_price_id": "price_1NnHGNBWxgf1nsIVimhDy0fz"
+    }
+  },
+  {
+    "model": "dishes.dish",
+    "pk": 19,
+    "fields": {
+      "name": "Суп с рисом и картошкой",
+      "slug": "sup-s-risom-i-kartoshkoj",
+      "description": "Курица, картошка, лук, морковь, рис, петрушка, соль, перец",
+      "price": "600.000",
+      "weight": 250,
+      "image": "dishes_images/sup_s_risom_i_kartoshkoi-53822_h6mKCrG.jpg",
+      "category": 3,
+      "stripe_price_id": "price_1NnHHmBWxgf1nsIVjlVcGM89"
+    }
+  },
+  {
+    "model": "dishes.dish",
+    "pk": 20,
+    "fields": {
+      "name": "Овощной суп с говядиной",
+      "slug": "ovoshnoj-sup-s-govyadinoj",
+      "description": "Говядина, вода, брокколи, картофель, лук, морковь, лавровый лист, растительное масло, соль, специи",
+      "price": "700.000",
+      "weight": 250,
+      "image": "dishes_images/ovoshnoi_sup_s_govyadinoi-663547_phJrKFh.jpeg",
+      "category": 3,
+      "stripe_price_id": "price_1NnHJNBWxgf1nsIVriDXhyg7"
+    }
+  },
+  {
+    "model": "dishes.dish",
+    "pk": 21,
+    "fields": {
+      "name": "Десерт \"Мамин любимый цветок\"",
+      "slug": "desert-mamin-lyubimyj-cvetok",
+      "description": "Шоколад темный 70%, какао, мороженое, шоколадное печенье, мята свежая",
+      "price": "600.000",
+      "weight": 250,
+      "image": "dishes_images/desert_quotmamin_liubimii_cvetokquot-608991_nYH24AM.jpeg",
+      "category": 4,
+      "stripe_price_id": "price_1NnHUYBWxgf1nsIVIHuc2ssF"
+    }
+  },
+  {
+    "model": "dishes.dish",
+    "pk": 22,
+    "fields": {
+      "name": "Десерт без выпечки и муки",
+      "slug": "desert-bez-vypechki-i-muki",
+      "description": "Какао-порошок, агар-агар, вода, молоко, сахар, шоколад",
+      "price": "800.000",
+      "weight": 250,
+      "image": "dishes_images/desert_bez_vipechki_i_muki-795537_LT3uwDL.jpg",
+      "category": 4,
+      "stripe_price_id": "price_1NnIcsBWxgf1nsIV2gYRBJ2b"
+    }
+  },
+  {
+    "model": "dishes.dish",
+    "pk": 23,
+    "fields": {
+      "name": "Сандей",
+      "slug": "sandej",
+      "description": "Мороженое, клубника, сахар, карамель, орехи, сливки, сахарная пудра",
+      "price": "500.000",
+      "weight": 250,
+      "image": "dishes_images/desert_quotsandeiquot-568422_IBlcZ4I.jpeg",
+      "category": 4,
+      "stripe_price_id": "price_1NnIeLBWxgf1nsIVnpK3f6UU"
+    }
+  },
+  {
+    "model": "dishes.dish",
+    "pk": 24,
+    "fields": {
+      "name": "Аранчини с моцареллой",
+      "slug": "aranchini-s-mocarelloj",
+      "description": "Ризотто, масло сливочное, масло растительное, лук, чеснок, вино, пармезан, моцарелла, мука, яйцо, панировочные сухари, масло для жарки",
+      "price": "1200.000",
+      "weight": 250,
+      "image": "dishes_images/aranchini_s_mocarelloi-491977_zTfY3QM.jpg",
+      "category": 5,
+      "stripe_price_id": "price_1NnIiiBWxgf1nsIVMlcrx5lq"
+    }
+  },
+  {
+    "model": "dishes.dish",
+    "pk": 25,
+    "fields": {
+      "name": "Кокот с грибами",
+      "slug": "kokot-s-gribami",
+      "description": "Курица, сливки, шампиньоны, масло растительное, лук, соль, сыр, мускатный орех, зелень",
+      "price": "900.000",
+      "weight": 300,
+      "image": "dishes_images/kokot_s_gribami-570243_l15yA4j.jpeg",
+      "category": 5,
+      "stripe_price_id": "price_1NnIjqBWxgf1nsIVjU1qsKEu"
+    }
+  },
+  {
+    "model": "dishes.dish",
+    "pk": 26,
+    "fields": {
+      "name": "Апельсиновый пунш",
+      "slug": "apelsinovyj-punsh",
+      "description": "Апельсин, вода горячая, мед цветочный, лимон, корица молотая, чай черный, коньяк",
+      "price": "500.000",
+      "weight": 200,
+      "image": "dishes_images/apelsinovii_punsh-660401_sa4locg.jpeg",
+      "category": 6,
+      "stripe_price_id": "price_1NnImIBWxgf1nsIVmxIB5NwD"
+    }
+  },
+  {
+    "model": "dishes.dish",
+    "pk": 27,
+    "fields": {
+      "name": "Гоголь-моголь алкогольный",
+      "slug": "gogol-mogol-alkogolnyj",
+      "description": "Яйцо, молоко, сахар, коньяк, сок лимона",
+      "price": "600.000",
+      "weight": 200,
+      "image": "dishes_images/gogol-mogol_alkogolnii-802138_nJ2ZoMo.jpeg",
+      "category": 6,
+      "stripe_price_id": "price_1NnInDBWxgf1nsIVHyX9JWWm"
+    }
+  },
+  {
+    "model": "dishes.dish",
+    "pk": 28,
+    "fields": {
+      "name": "Коктейль с пивом",
+      "slug": "koktejl-s-pivom",
+      "description": "Пиво светлое, томатный сок, кетчуп чили, соус табаско, лайм (сок), красный молотый перец (для оформления), соль, перец, лед",
+      "price": "300.000",
+      "weight": 200,
+      "image": "dishes_images/kokteil_s_pivom-756450_B6TOLRK.jpeg",
+      "category": 6,
+      "stripe_price_id": "price_1NnIoFBWxgf1nsIVEyhPpk8m"
     }
   }
 ]
