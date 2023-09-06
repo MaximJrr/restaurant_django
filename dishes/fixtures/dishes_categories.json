@@ -1,1 +1,65 @@
-[{"model": "dishes.dishcategory", "pk": 1, "fields": {"name": "Напитки", "slug": "napitki", "description": "Описание напитков"}}, {"model": "dishes.dishcategory", "pk": 2, "fields": {"name": "Соусы", "slug": "sousy", "description": "Описание соусов"}}, {"model": "dishes.dishcategory", "pk": 3, "fields": {"name": "Супы", "slug": "supy", "description": "Описание супов"}}, {"model": "dishes.dishcategory", "pk": 4, "fields": {"name": "Десерты", "slug": "deserty", "description": "Описание десертов"}}, {"model": "dishes.dishcategory", "pk": 5, "fields": {"name": "Горячие закуски", "slug": "goryachie-zakuski", "description": "Описание горячих закусок"}}, {"model": "dishes.dishcategory", "pk": 6, "fields": {"name": "Алкоголь", "slug": "alkogol", "description": "Описание алкоголя"}}, {"model": "dishes.dishcategory", "pk": 7, "fields": {"name": "Выпечка", "slug": "vypechka", "description": "Описание выпечки"}}]
+[
+  {
+    "model": "dishes.dishcategory",
+    "pk": 1,
+    "fields": {
+      "name": "Напитки",
+      "slug": "napitki",
+      "description": "Описание напитков"
+    }
+  },
+  {
+    "model": "dishes.dishcategory",
+    "pk": 2,
+    "fields": {
+      "name": "Соусы",
+      "slug": "sousy",
+      "description": "Описание соусов"
+    }
+  },
+  {
+    "model": "dishes.dishcategory",
+    "pk": 3,
+    "fields": {
+      "name": "Супы",
+      "slug": "supy",
+      "description": "Описание супов"
+    }
+  },
+  {
+    "model": "dishes.dishcategory",
+    "pk": 4,
+    "fields": {
+      "name": "Десерты",
+      "slug": "deserty",
+      "description": "Описание десертов"
+    }
+  },
+  {
+    "model": "dishes.dishcategory",
+    "pk": 5,
+    "fields": {
+      "name": "Горячие закуски",
+      "slug": "goryachie-zakuski",
+      "description": "Описание горячих закусок"
+    }
+  },
+  {
+    "model": "dishes.dishcategory",
+    "pk": 6,
+    "fields": {
+      "name": "Алкоголь",
+      "slug": "alkogol",
+      "description": "Описание алкоголя"
+    }
+  },
+  {
+    "model": "dishes.dishcategory",
+    "pk": 7,
+    "fields": {
+      "name": "Выпечка",
+      "slug": "vypechka",
+      "description": "Описание выпечки"
+    }
+  }
+]
