@@ -5,11 +5,10 @@ from django.shortcuts import HttpResponseRedirect, get_object_or_404, render
 from django.views import View
 from django.views.generic import ListView
 
-from common.views import TitleMixin
 from dishes.models import Basket, Dish, DishCategory
 
 
-class IndexView(TitleMixin, ListView):
+class IndexView(ListView):
     active_section = 'index'
     template_name = 'dishes/index.html'
     title = 'Restaurant'
@@ -21,7 +20,7 @@ class IndexView(TitleMixin, ListView):
         return context
 
 
-class DishesListView(TitleMixin, ListView):
+class DishesListView(ListView):
     active_section = 'menu'
     model = Dish
     template_name = 'dishes/menu.html'
