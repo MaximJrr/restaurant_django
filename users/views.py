@@ -8,18 +8,17 @@ from django.urls import reverse, reverse_lazy
 from django.views.generic import TemplateView
 from django.views.generic.edit import CreateView
 
-from common.views import TitleMixin
 from users.forms import UserLoginForm, UserRegistrationForm, ReservationForm
 from users.models import EmailVerification, User, Reservation
 
 
-class UserLoginView(TitleMixin, LoginView):
+class UserLoginView(LoginView):
     template_name = 'users/login.html'
     form_class = UserLoginForm
     title = 'Авторизация'
 
 
-class UserRegisterView(TitleMixin, CreateView):
+class UserRegisterView(CreateView):
     model = User
     form_class = UserRegistrationForm
     template_name = 'users/register.html'
@@ -49,7 +48,7 @@ class ReservationVerification(TemplateView):
     template_name = 'users/reservation_verification.html'
 
 
-class EmailVerificationView(TitleMixin, TemplateView):
+class EmailVerificationView(TemplateView):
     title = 'Подтверждение электронной почты'
     template_name = 'users/email_verification.html'
 
