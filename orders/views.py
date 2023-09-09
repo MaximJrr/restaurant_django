@@ -7,7 +7,6 @@ from django.urls import reverse, reverse_lazy
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import CreateView, DetailView, ListView, TemplateView
 
-from common.views import TitleMixin
 from dishes.models import Basket
 from orders.forms import OrderForm
 from orders.models import Order
@@ -15,7 +14,7 @@ from orders.models import Order
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
 
-class SuccessTemplateView(TitleMixin, TemplateView):
+class SuccessTemplateView(TemplateView):
     template_name = 'orders/success.html'
 
 
@@ -23,7 +22,7 @@ class CancelTemplateView(TemplateView):
     template_name = 'orders/cancel.html'
 
 
-class OrderListView(TitleMixin, ListView):
+class OrderListView(ListView):
     template_name = 'orders/orders.html'
     queryset = Order.objects.all()
     ordering = ['-created']
@@ -43,7 +42,7 @@ class OrderDetailView(DetailView):
         return context
 
 
-class OrderCreateView(TitleMixin, CreateView):
+class OrderCreateView(CreateView):
     template_name = 'orders/order-create.html'
     form_class = OrderForm
     success_url = reverse_lazy('orders:order_create')
