@@ -207,7 +207,7 @@ STRIPE_WEBHOOK_SECRET_KEY = 'whsec_a001f6aab5339d09ad4db04c81c2c2dd45af99626dff1
 
 REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
-    'PAGE_SIZE': 1,
+    'PAGE_SIZE': 10,
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.TokenAuthentication',
     ],
