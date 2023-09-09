@@ -1,7 +1,7 @@
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
-from rest_framework.permissions import IsAdminUser, IsAuthenticated
+from rest_framework.permissions import IsAdminUser, IsAuthenticated, IsAuthenticatedOrReadOnly
 from dishes.models import Dish, Basket
 from dishes.serializers import DishSerializer, BasketSerializer
 
@@ -12,7 +12,7 @@ class DishModelViewSet(ModelViewSet):
 
     def get_permissions(self):
         if self.action in ('update', 'create', 'destroy'):
-            self.permission_classes = (IsAdminUser,)
+            self.permission_classes = (IsAdminUser, IsAuthenticated, IsAuthenticatedOrReadOnly)
         return super(DishModelViewSet, self).get_permissions()
 
 

@@ -1,5 +1,4 @@
 from rest_framework import serializers
-from rest_framework.renderers import JSONRenderer
 from rest_framework import fields
 from dishes.models import Dish, DishCategory, Basket
 
@@ -9,7 +8,7 @@ class DishSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Dish
-        fields = ['id', 'name', 'description', 'price', 'category']
+        fields = ['id', 'name', 'description', 'price', 'weight', 'image', 'category']
 
 
 class BasketSerializer(serializers.ModelSerializer):
