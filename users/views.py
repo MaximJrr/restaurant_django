@@ -30,7 +30,7 @@ class ReservationView(LoginRequiredMixin, CreateView):
     model = Reservation
     template_name = 'users/reservation.html'
     form_class = ReservationForm
-    success_url = reverse_lazy('dishes:index')
+    success_url = reverse_lazy('users:reservation_verification')
 
     def form_valid(self, form):
         table_number = form.cleaned_data['table_number']
