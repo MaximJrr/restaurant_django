@@ -3,8 +3,7 @@ from django.urls import reverse
 from http import HTTPStatus
 
 from dishes.models import Dish, DishCategory
-from restaurant.settings import LOGIN_REDIRECT_URL
-from users.models import User
+from users.models import User, Reservation
 
 
 # dishes app views
@@ -69,7 +68,6 @@ class UserRegistrationTest(TestCase):
         username = self.data['username']
         response = self.client.post(self.path, data=self.data)
 
-        self.assertFalse(User.objects.filter(username=username).exists())
         self.assertEqual(response.status_code, HTTPStatus.FOUND)
         self.assertRedirects(response, reverse('users:login'))
         self.assertTrue(User.objects.filter(username=username).exists())
@@ -91,3 +89,42 @@ class UserLoginTest(TestCase):
 
         self.assertEqual(response.status_code, HTTPStatus.OK)
         self.assertTemplateUsed(response, 'users/login.html')
+
+
+class UserReservationVerificationTest(TestCase):
+    def test_verification_get(self):
+        path = reverse('users:reservation_verification')
+        response = self.client.get(path)
+
+        self.assertEqual(response.status_code, HTTPStatus.OK)
+        self.assertTemplateUsed(response, 'users/reservation_verification.html')
+
+
+class UserReservationTest(TestCase):
+    def setUp(self):
+        User.objects.create_user(username='testuser', password='testpassword')
+        self.client.login(username='testuser', password='testpassword')
+        self.path = reverse('users:reservation')
+        self.data = {
+            'name': 'testuser',
+            'how_many_people': '3',
+            'date_time': '2023-09-15 12:00:00',
+            'table_number': '5'
+        }
+
+    def test_form_valid(self):
+        response = self.client.post(self.path, self.data)
+
+        self.assertEqual(response.status_code, HTTPStatus.FOUND)
+        self.assertRedirects(response, reverse('users:reservation_verification'))
+
+    def test_reservation_form_duplicate(self):
+        Reservation.objects.create(
+            name='testuser', how_many_people='3', date_time='2023-09-15 12:00:00', table_number='5'
+        )
+        response = self.client.post(self.path, self.data)
+
+        self.assertEqual(response.status_code, HTTPStatus.OK)
+        self.assertContains(
+            response, 'Данное место на указанное время уже занято, выберите другое место, или время'
+        )
