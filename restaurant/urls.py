@@ -26,7 +26,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', IndexView.as_view(), name='index'),
     path('menu/', include('dishes.urls', namespace='dishes')),
-    path('', include('users.urls', namespace='users')),
+    path('users/', include('users.urls', namespace='users')),
     path('accounts/', include('allauth.urls')),
     path('orders/', include('orders.urls', namespace='orders')),
     path('webhook/stripe/', stripe_webhook_view, name='stripe_webhook'),
