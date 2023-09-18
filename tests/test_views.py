@@ -3,7 +3,7 @@ from django.urls import reverse
 from http import HTTPStatus
 
 from dishes.models import Dish, DishCategory
-from users.models import User, Reservation
+from users.models import User, Reservation, EmailVerification
 
 
 # dishes app views
@@ -128,3 +128,26 @@ class UserReservationTest(TestCase):
         self.assertContains(
             response, 'Данное место на указанное время уже занято, выберите другое место, или время'
         )
+
+
+class EmailVerificationTest(TestCase):
+    def setUp(self):
+        self.user = User.objects.create_user(
+            username='test_user', password='test_user12345', email='testuser@gmail.com'
+        )
+        self.email_verification = EmailVerification.objects.create(
+            user=self.user,
+            unique_code='9edff54c-5914-4aba-ac5a-65cbfda96093',
+            expiration_time='2035-09-20 16:11:00'
+        )
+        self.path = reverse(
+            'users:email_verification',
+            kwargs={'email': self.user.email, 'unique_code': '9edff54c-5914-4aba-ac5a-65cbfda96093'}
+        )
+        self.response = self.client.get(self.path)
+
+    def test_email_verification_valid_data(self):
+        self.assertEqual(self.response.status_code, HTTPStatus.OK)
+        self.assertTemplateUsed(self.response, 'users/email_verification.html')
+        self.user.refresh_from_db()
+        self.assertTrue(self.user.is_verified_email)

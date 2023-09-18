@@ -6,7 +6,7 @@ from users.models import EmailVerification, User, Reservation
 
 @admin.register(User)
 class UserAdmin(admin.ModelAdmin):
-    list_display = ['username', 'image']
+    list_display = ['id', 'username', 'image']
     inlines = (BasketAdmin,)
 
 
