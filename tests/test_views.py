@@ -3,6 +3,7 @@ from django.urls import reverse
 from http import HTTPStatus
 
 from dishes.models import Dish, DishCategory
+from orders.models import Order
 from users.models import User, Reservation, EmailVerification
 
 
@@ -151,3 +152,23 @@ class EmailVerificationTest(TestCase):
         self.assertTemplateUsed(self.response, 'users/email_verification.html')
         self.user.refresh_from_db()
         self.assertTrue(self.user.is_verified_email)
+
+
+# orders app views
+
+class SuccessTemplateTest(TestCase):
+    def test_template(self):
+        path = reverse('orders:order-success')
+        response = self.client.get(path)
+
+        self.assertEqual(response.status_code, HTTPStatus.OK)
+        self.assertTemplateUsed(response, 'orders/success.html')
+
+
+class CancelTemplateTest(TestCase):
+    def test_template(self):
+        path = reverse('orders:order-cancel')
+        response = self.client.get(path)
+
+        self.assertEqual(response.status_code, HTTPStatus.OK)
+        self.assertTemplateUsed(response, 'orders/cancel.html')
