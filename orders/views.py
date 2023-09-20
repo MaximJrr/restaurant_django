@@ -45,7 +45,7 @@ class OrderDetailView(DetailView):
 class OrderCreateView(CreateView):
     template_name = 'orders/order-create.html'
     form_class = OrderForm
-    success_url = reverse_lazy('orders:order_create')
+    success_url = reverse_lazy('orders:order-create')
     title = 'Store - Оформление заказа'
 
     def post(self, request, *args, **kwargs):
@@ -59,10 +59,6 @@ class OrderCreateView(CreateView):
             cancel_url='{}{}'.format(settings.DOMAIN_NAME, reverse('orders:order-cancel')),
         )
         return HttpResponseRedirect(checkout_session.url, status=HTTPStatus.SEE_OTHER)
-
-    def form_valid(self, form):
-        form.instance.initiator = self.request.user
-        return super(OrderCreateView, self).form_valid(form)
 
     def form_valid(self, form):
         form.instance.initiator = self.request.user
