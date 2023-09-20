@@ -1,8 +1,11 @@
+from unittest.mock import patch
+
+from django.conf import settings
 from django.test import TestCase
 from django.urls import reverse
 from http import HTTPStatus
 
-from dishes.models import Dish, DishCategory
+from dishes.models import Dish, DishCategory, Basket
 from orders.models import Order
 from users.models import User, Reservation, EmailVerification
 
@@ -212,3 +215,40 @@ class OrderDetailTest(TestCase):
     def test_order_detail(self):
         self.assertEqual(self.response.status_code, HTTPStatus.OK)
         self.assertTemplateUsed(self.response, 'orders/order.html')
+
+
+class OrderCreateTest(TestCase):
+    def setUp(self):
+        self.user = User.objects.create_user(username='test_user', password='test_password')
+        self.client.login(username='test_user', password='test_password')
+
+    @patch('stripe.checkout.Session.create')
+    def test_order_create(self, mock_stripe_session_create):
+        mock_stripe_session_create.return_value.url = 'https://example.com/stripe-checkout'
+        category = DishCategory.objects.create(
+            name='тест',
+            slug='test',
+            description='test'
+        )
+        dish = Dish.objects.create(
+            name='тест',
+            slug='slug',
+            description='test_description',
+            price=300,
+            weight=300,
+            category=category
+        )
+        Basket.objects.create(user=self.user, dish=dish, quantity=1)
+        data = {
+            'first_name': 'Test',
+            'last_name': 'Test',
+            'email': 'test12345@gmail.com',
+            'address': 'test address 123',
+        }
+        path = reverse('orders:order-create')
+        response = self.client.post(path, data)
+
+        self.assertEqual(response.status_code, HTTPStatus.SEE_OTHER)
+        self.assertEqual(Order.objects.count(), 1)
+        created_order = Order.objects.first()
+        self.assertEqual(created_order.initiator, self.user)
