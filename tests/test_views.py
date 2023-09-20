@@ -193,3 +193,22 @@ class OrderListTest(TestCase):
 
         self.assertEqual(self.response.status_code, HTTPStatus.OK)
         self.assertTemplateUsed(self.response, 'orders/orders.html')
+
+
+class OrderDetailTest(TestCase):
+    def setUp(self):
+        self.user = User.objects.create_user(username='test_user', password='test_password')
+        self.order = Order.objects.create(
+            first_name='test_order',
+            last_name='test_last_name',
+            email='test_email123@gmail.com',
+            address='test_address123',
+            basket_history={},
+            initiator=self.user
+        )
+        self.path = reverse('orders:order-detail', kwargs={'pk': self.order.id})
+        self.response = self.client.get(self.path)
+
+    def test_order_detail(self):
+        self.assertEqual(self.response.status_code, HTTPStatus.OK)
+        self.assertTemplateUsed(self.response, 'orders/order.html')
