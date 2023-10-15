@@ -12,6 +12,9 @@ class User(AbstractUser):
     is_verified_email = models.BooleanField(default=False)
     email = models.EmailField(unique=True)
 
+    def __str__(self):
+        return f'Пользователь: {self.username} | Email пользователя: {self.email}'
+
 
 class EmailVerification(models.Model):
     unique_code = models.UUIDField(unique=True)
