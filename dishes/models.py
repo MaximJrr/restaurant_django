@@ -11,7 +11,7 @@ stripe.api_key = settings.STRIPE_SECRET_KEY
 class DishCategory(models.Model):
     name = models.CharField(max_length=100, unique=True)
     slug = models.SlugField(max_length=255, unique=True, verbose_name='URL')
-    description = models.TextField()
+    description = models.TextField(blank=True, null=True)
 
     def __str__(self):
         return f'{self.name} | {self.description}'
