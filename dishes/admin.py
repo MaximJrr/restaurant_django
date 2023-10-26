@@ -1,4 +1,4 @@
-from django.contrib import admin
+from django.contrib import admin, messages
 
 from dishes.models import Basket, Dish, DishCategory
 
@@ -29,10 +29,18 @@ class DishAdmin(admin.ModelAdmin):
 
 @admin.register(DishCategory)
 class DishCategoryAdmin(admin.ModelAdmin):
-    list_display = ['name', 'description']
+    list_display = ['id', 'name', 'description']
+    list_editable = ['name', 'description']
+    list_per_page = 5
     search_fields = ['name']
-    ordering = ['name']
+    ordering = ['id']
+    actions = ['delete_description']
     prepopulated_fields = {'slug': ('name',)}
+
+    @admin.action(description='Удалить описание категорий')
+    def delete_description(self, request, queryset):
+        count = queryset.update(description=None)
+        return self.message_user(request, f"Было удалено {count} категорий", messages.WARNING)
 
 
 class BasketAdmin(admin.TabularInline):
