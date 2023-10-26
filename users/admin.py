@@ -6,7 +6,10 @@ from users.models import EmailVerification, User, Reservation
 
 @admin.register(User)
 class UserAdmin(admin.ModelAdmin):
-    list_display = ['id', 'username', 'image']
+    list_display = ['id', 'username',  'image', 'email', 'is_verified_email']
+    list_editable = ['is_verified_email']
+    list_display_links = ['username']
+    ordering = ['id']
     inlines = (BasketAdmin,)
 
 
