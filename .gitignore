@@ -4,4 +4,4 @@ media
 .env
 static
 venv
-__pycache__/
+**/__pycache__/
