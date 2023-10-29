@@ -48,11 +48,9 @@
         <span class="value total-price">{{ baskets.total_sum|floatformat:"0"|intcomma }} руб.</span>
       </div>
       <div class="order-button">
-        <form method="post" action="{% url 'orders:order-create' %}">
-          {% csrf_token %}
-          <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
-          <button type="submit" class="btn continue">Заказать</button>
-        </form>
+        <a class="btn btn-success btn-lg float-right" href="{% url 'orders:order-create' %}">
+            Оформить заказ
+        </a>
       </div>
     </div>
   </div>
