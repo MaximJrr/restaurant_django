@@ -28,6 +28,10 @@ class Order(models.Model):
     def __str__(self):
         return f'Заказ № - {self.pk} для {self.first_name} {self.last_name}'
 
+    class Meta:
+        verbose_name = 'Заказ'
+        verbose_name_plural = 'Заказы'
+
     def update_after_pay(self):
         baskets = Basket.objects.filter(user=self.initiator)
         self.status = self.PAID
