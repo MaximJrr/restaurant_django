@@ -7,7 +7,7 @@ from dishes.models import Basket, Dish, DishCategory
 class DishAdmin(admin.ModelAdmin):
     list_display = ['id', 'name', 'price', 'weight', 'description', 'category', 'price_info']
     list_editable = ['name', 'price', 'weight', 'category']
-    search_fields = ['name']
+    search_fields = ['name', 'category__name']
     ordering = ['id']
     list_per_page = 10
     prepopulated_fields = {'slug': ('name',)}
