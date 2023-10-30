@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django.utils import timezone
 
 from dishes.admin import BasketAdmin
 from users.models import EmailVerification, User, Reservation
@@ -37,5 +38,16 @@ class EmailVerificationAdmin(admin.ModelAdmin):
 
 @admin.register(Reservation)
 class VerificationAdmin(admin.ModelAdmin):
-    list_display = ['name', 'how_many_people', 'table_number', 'time_create', 'date_time']
+    list_display = ['id', 'name', 'how_many_people', 'table_number', 'time_create', 'date_time', 'check_time']
+    list_display_links = ['name']
+    list_editable = ['how_many_people', 'table_number']
+    ordering = ['time_create']
+    readonly_fields = ['time_create']
+    search_fields = ['name', 'date_time']
+    list_per_page = 10
+
+    @admin.display(description='Время до прибытия')
+    def check_time(self, reservation: Reservation):
+        current_time = timezone.now()
+        return reservation.date_time - current_time
 
