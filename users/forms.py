@@ -1,5 +1,6 @@
 from django import forms
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
+from django.core.exceptions import ValidationError
 
 from users.models import User, Reservation
 from users.tasks import send_email_verification
@@ -41,12 +42,18 @@ class UserRegistrationForm(UserCreationForm):
 
 
 class ReservationForm(forms.ModelForm):
-    name = forms.CharField(widget=forms.TextInput(attrs={
-        'class': 'form-control py 4', 'placeholder': 'Введите имя'}))
+    name = forms.CharField(
+        min_length=2,
+        error_messages={
+            'min_length': 'Минимальная длина имени - 2 символа'
+        },
+        widget=forms.TextInput(attrs={
+        'class': 'form-control py 4', 'placeholder': 'Введите имя'})
+    )
     how_many_people = forms.IntegerField(widget=forms.NumberInput(attrs={
         'class': 'form-control py 4', 'placeholder': 'Введите кол-во гостей'}))
     date_time = forms.DateTimeField(widget=forms.DateTimeInput(attrs={
-        'class': 'form-control py 4', 'placeholder': '19/05/2023 13:00'}))
+        'class': 'form-control py 4', 'placeholder': '19.05.2023 13:00'}))
     table_number = forms.IntegerField(widget=forms.NumberInput(attrs={
         'class': 'form-control py 4', 'placeholder': 'Введите номер столика'}))
 
@@ -55,8 +62,27 @@ class ReservationForm(forms.ModelForm):
         fields = ['name', 'how_many_people', 'table_number', 'date_time']
         read_only = ['time_create']
 
+    def clean_name(self):
+        name = self.cleaned_data['name']
+        valid_chars = set(
+            "' 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZабвгдежзи"
+            "йклмнопрстуфхцчшщъыьэюяАБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ"
+        )
 
+        if any(char not in valid_chars for char in name):
+            raise ValidationError("Имя может содержать только английские, или русские буквы")
+        return name
 
+    def clean_table_number(self):
+        table_number = self.cleaned_data['table_number']
 
+        if table_number > 10 or table_number < 1:
+            raise ValidationError("Пожалуйста, выберите номер столика от 1 до 10")
+        return table_number
 
+    def clean_how_many_people(self):
+        how_many_people = self.cleaned_data['how_many_people']
 
+        if how_many_people > 10 or how_many_people < 1:
+            raise ValidationError("Мимальное кол-во мест 1, максимальное 10")
+        return how_many_people
