@@ -13,11 +13,10 @@ class IndexView(ListView):
     template_name = 'dishes/index.html'
     title = 'Restaurant'
     model = Dish
+    context_object_name = 'dishes'
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['dishes'] = Dish.objects.all().order_by('-id')[:3]
-        return context
+    def get_queryset(self):
+        return Dish.objects.all().order_by('-id')[:3]
 
 
 class DishesListView(ListView):
