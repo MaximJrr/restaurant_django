@@ -11,9 +11,9 @@ from dishes.models import Basket, Dish, DishCategory
 class IndexView(ListView):
     active_section = 'index'
     template_name = 'dishes/index.html'
-    title = 'Restaurant'
     model = Dish
     context_object_name = 'dishes'
+    extra_context = {'title': "Главная страница"}
 
     def get_queryset(self):
         return Dish.objects.all().order_by('-id')[:3]
@@ -25,7 +25,7 @@ class DishesListView(ListView):
     template_name = 'dishes/menu.html'
     context_object_name = 'dishes'
     paginate_by = 9
-    title = 'Restaurant - menu'
+    extra_context = {'title': "Меню"}
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
