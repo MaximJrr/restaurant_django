@@ -1,5 +1,4 @@
 from django.contrib import auth
-from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView
 from django.http import HttpResponseRedirect
@@ -46,7 +45,7 @@ class ReservationView(LoginRequiredMixin, CreateView):
             return super().form_valid(form)
 
 
-class ReservationVerification(TemplateView):
+class ReservationVerificationView(TemplateView):
     template_name = 'users/reservation_verification.html'
     extra_context = {'title': "Вы успешно забронировали место!"}
 
@@ -69,7 +68,7 @@ class EmailVerificationView(TemplateView):
             return HttpResponseRedirect(reverse('index'))
 
 
-class Basket(TemplateView):
+class BasketView(TemplateView):
     template_name = 'dishes/basket.html'
     extra_context = {'title': 'Корзина'}
 
