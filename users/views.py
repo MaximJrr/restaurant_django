@@ -1,5 +1,4 @@
 from django.contrib import auth
-from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView
 from django.http import HttpResponseRedirect
@@ -15,7 +14,7 @@ from users.models import EmailVerification, User, Reservation
 class UserLoginView(LoginView):
     template_name = 'users/login.html'
     form_class = UserLoginForm
-    title = 'Авторизация'
+    extra_context = {'title': "Авторизация"}
 
 
 class UserRegisterView(CreateView):
@@ -24,6 +23,7 @@ class UserRegisterView(CreateView):
     template_name = 'users/register.html'
     success_url = reverse_lazy('users:login')
     success_message = 'Регистрация прошла успешно'
+    extra_context = {'title': 'Регистрация'}
 
 
 class ReservationView(LoginRequiredMixin, CreateView):
@@ -31,6 +31,7 @@ class ReservationView(LoginRequiredMixin, CreateView):
     template_name = 'users/reservation.html'
     form_class = ReservationForm
     success_url = reverse_lazy('users:reservation_verification')
+    extra_context = {'title': 'Бронирование'}
 
     def form_valid(self, form):
         table_number = form.cleaned_data['table_number']
@@ -44,13 +45,15 @@ class ReservationView(LoginRequiredMixin, CreateView):
             return super().form_valid(form)
 
 
-class ReservationVerification(TemplateView):
+class ReservationVerificationView(TemplateView):
     template_name = 'users/reservation_verification.html'
+    extra_context = {'title': "Вы успешно забронировали место!"}
 
 
 class EmailVerificationView(TemplateView):
     title = 'Подтверждение электронной почты'
     template_name = 'users/email_verification.html'
+    extra_context = {'title': "Ваша учетная запись успешно подтверждена!"}
 
     def get(self, request, *args, **kwargs):
         unique_code = kwargs['unique_code']
@@ -65,11 +68,11 @@ class EmailVerificationView(TemplateView):
             return HttpResponseRedirect(reverse('index'))
 
 
+class BasketView(TemplateView):
+    template_name = 'dishes/basket.html'
+    extra_context = {'title': 'Корзина'}
+
+
 def logout(request):
     auth.logout(request)
     return HttpResponseRedirect(reverse('index'))
-
-
-@login_required()
-def basket(request):
-    return render(request, 'dishes/basket.html')

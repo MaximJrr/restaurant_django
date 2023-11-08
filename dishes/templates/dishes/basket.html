@@ -1,64 +1,66 @@
 {% load static %}
-{% if baskets %}
 {% load humanize %}
 
-<head>
-    <link rel="stylesheet" href="{% static 'css/basket.css' %}">
-</head>
-<div class="wrap cf">
-  <h1 class="projTitle">Моя корзина</h1>
-  <div class="heading cf">
-    <a href="{% url 'dishes:index' %}" class="continue">Вернуться в меню</a>
-  </div>
-  <div class="cart-wrap">
-    <div class="cart">
-      <ul class="cart-items">
-        {% for basket in baskets %}
-        <li class="cart-item" data-basket-id="{{ basket.id }}">
-          <div class="item-info">
-            <div class="item-img">
-              <img src="{{ basket.dish.image.url }}" alt="image not found" class="itemImg" />
-            </div>
-              <div class="item-details">
-                <h3>{{ basket.dish.name }}</h3>
-                <div class="item-quantity">
-                  <input type="number" class="qty update-quantity" min="1" max="10" value="{{ basket.quantity }}" data-basket-id="{{ basket.id }}" />
+{% if baskets %}
+    <head>
+        <link rel="stylesheet" href="{% static 'css/basket.css' %}">
+        <title>{{ title }}</title>
+    </head>
+    <div class="wrap cf">
+      <h1 class="projTitle">Моя корзина</h1>
+      <div class="heading cf">
+        <a href="{% url 'dishes:index' %}" class="continue">Вернуться в меню</a>
+      </div>
+      <div class="cart-wrap">
+        <div class="cart">
+          <ul class="cart-items">
+            {% for basket in baskets %}
+            <li class="cart-item" data-basket-id="{{ basket.id }}">
+              <div class="item-info">
+                <div class="item-img">
+                  <img src="{{ basket.dish.image.url }}" alt="image not found" class="itemImg" />
                 </div>
-                <div class="item-total" data-basket-id="{{ basket.id }}">
-                  <p class="item-price item-price-{{ basket.id }}">{{ basket.sum|floatformat:"0"|intcomma }} руб.</p>
-                </div>
+                  <div class="item-details">
+                    <h3>{{ basket.dish.name }}</h3>
+                    <div class="item-quantity">
+                      <input type="number" class="qty update-quantity" min="1" max="10" value="{{ basket.quantity }}" data-basket-id="{{ basket.id }}" />
+                    </div>
+                    <div class="item-total" data-basket-id="{{ basket.id }}">
+                      <p class="item-price item-price-{{ basket.id }}">{{ basket.sum|floatformat:"0"|intcomma }} руб.</p>
+                    </div>
+                  </div>
               </div>
-          </div>
-          <form method="POST" action="{% url 'dishes:basket_remove' basket.id %}">
-            {% csrf_token %}
-            <button type="submit" class="remove">Удалить</button>
-          </form>
-        </li>
-        {% endfor %}
-      </ul>
-    </div>
+              <form method="POST" action="{% url 'dishes:basket_remove' basket.id %}">
+                {% csrf_token %}
+                <button type="submit" class="remove">Удалить</button>
+              </form>
+            </li>
+            {% endfor %}
+          </ul>
+        </div>
 
-    <div class="cart-total">
-      <div class="total-row">
-        <span class="label">Общее кол-во:</span>
-        <span class="value total-quantity">{{ baskets.total_quantity }} шт.</span>
-      </div>
-      <div class="total-row final">
-        <span class="label">Всего:</span>
-        <span class="value total-price">{{ baskets.total_sum|floatformat:"0"|intcomma }} руб.</span>
-      </div>
-      <div class="order-button">
-        <a class="btn btn-success btn-lg float-right" href="{% url 'orders:order-create' %}">
-            Оформить заказ
-        </a>
+        <div class="cart-total">
+          <div class="total-row">
+            <span class="label">Общее кол-во:</span>
+            <span class="value total-quantity">{{ baskets.total_quantity }} шт.</span>
+          </div>
+          <div class="total-row final">
+            <span class="label">Всего:</span>
+            <span class="value total-price">{{ baskets.total_sum|floatformat:"0"|intcomma }} руб.</span>
+          </div>
+          <div class="order-button">
+            <a class="btn btn-success btn-lg float-right" href="{% url 'orders:order-create' %}">
+                Оформить заказ
+            </a>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
-</div>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="{% static 'js/basket.js' %}"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="{% static 'js/basket.js' %}"></script>
 {% else %}
 <h4 class="mt-3 mb-3 text-center">
     Корзина пуста
 </h4>
+<a href="{% url 'dishes:index' %}" class="continue">Вернуться в меню</a>
 {% endif %}
