@@ -16,6 +16,7 @@ stripe.api_key = settings.STRIPE_SECRET_KEY
 
 class SuccessTemplateView(TemplateView):
     template_name = 'orders/success.html'
+    extra_context = {'title': "Спасибо за заказ!"}
 
 
 class CancelTemplateView(TemplateView):
@@ -26,6 +27,7 @@ class OrderListView(ListView):
     template_name = 'orders/orders.html'
     queryset = Order.objects.all()
     ordering = ['-created']
+    extra_context = {'title': 'Заказы'}
 
     def get_queryset(self):
         query_set = super(OrderListView, self).get_queryset()
@@ -46,7 +48,7 @@ class OrderCreateView(CreateView):
     template_name = 'orders/order-create.html'
     form_class = OrderForm
     success_url = reverse_lazy('orders:order-create')
-    title = 'Store - Оформление заказа'
+    extra_context = {'title': "Оформление заказа"}
 
     def post(self, request, *args, **kwargs):
         super(OrderCreateView, self).post(request, *args, **kwargs)
