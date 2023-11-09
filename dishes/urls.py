@@ -5,7 +5,7 @@ from dishes.views import DishesListView, CategoryListView, basket_add, basket_re
 app_name = 'dishes'
 
 urlpatterns = [
-    path('', DishesListView.as_view(), name='index'),
+    path('', DishesListView.as_view(), name='menu'),
     path('category/<slug:category_slug>/', CategoryListView.as_view(), name='category'),
     path('page/<int:page>/', DishesListView.as_view(), name='paginator'),
     path('add/<int:dish_id>/', basket_add, name='basket_add'),
