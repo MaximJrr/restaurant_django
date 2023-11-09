@@ -19,8 +19,7 @@ class IndexView(ListView):
         return Dish.objects.all().order_by('-id')[:3]
 
 
-class DishesListView(ListView):
-    active_section = 'menu'
+class MenuView(ListView):
     model = Dish
     template_name = 'dishes/menu.html'
     context_object_name = 'dishes'
