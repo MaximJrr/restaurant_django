@@ -1,6 +1,5 @@
 from django.db import models
 
-from dishes.models import Basket
 from users.models import User
 
 
@@ -32,13 +31,8 @@ class Order(models.Model):
         verbose_name = 'Заказ'
         verbose_name_plural = 'Заказы'
 
-    def update_after_pay(self):
-        baskets = Basket.objects.filter(user=self.initiator)
-        self.status = self.PAID
+    def update_after_pay(self, baskets):
         self.basket_history = {
             'purchased_items': [basket.de_json() for basket in baskets],
             'total_sum': float(baskets.total_sum()),
         }
-        baskets.delete()
-        self.save()
-

@@ -1,8 +1,7 @@
-from http import HTTPStatus
-
 import stripe
 from django.conf import settings
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse
+from django.shortcuts import redirect
 from django.urls import reverse, reverse_lazy
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import CreateView, DetailView, ListView, TemplateView
@@ -50,21 +49,18 @@ class OrderCreateView(CreateView):
     success_url = reverse_lazy('orders:order-create')
     extra_context = {'title': "Оформление заказа"}
 
-    def post(self, request, *args, **kwargs):
-        super(OrderCreateView, self).post(request, *args, **kwargs)
+    def form_valid(self, form):
+        form.instance.initiator = self.request.user
+        response = super().form_valid(form)
         baskets = Basket.objects.filter(user=self.request.user)
         checkout_session = stripe.checkout.Session.create(
             line_items=baskets.stripe_products(),
-            metadata={'order_id': self.object},
+            metadata={'order_id': self.object.id},
             mode='payment',
             success_url='{}{}'.format(settings.DOMAIN_NAME, reverse('orders:order-success')),
             cancel_url='{}{}'.format(settings.DOMAIN_NAME, reverse('orders:order-cancel')),
         )
-        return HttpResponseRedirect(checkout_session.url, status=HTTPStatus.SEE_OTHER)
-
-    def form_valid(self, form):
-        form.instance.initiator = self.request.user
-        return super(OrderCreateView, self).form_valid(form)
+        return redirect(checkout_session.url)
 
 
 @csrf_exempt
@@ -86,21 +82,22 @@ def stripe_webhook_view(request):
 
     # Handle the checkout.session.completed event
     if event['type'] == 'checkout.session.completed':
-        # Retrieve the session. If you require line items in the response, you may include them by expanding line_items.
-        session = stripe.checkout.Session.retrieve(
-            event['data']['object']['id'],
-            expand=['line_items'],
-        )
+        session_id = event['data']['object']['id']
+        session = stripe.checkout.Session.retrieve(session_id, expand=['line_items'])
+        if session:
+            fulfill_order(session)
 
-        line_items = session
-        # Fulfill the purchase...
-        fulfill_order(line_items)
-
-    # Passed signature verification
     return HttpResponse(status=200)
 
 
 def fulfill_order(session):
-    order_id = int(session.metadata.order_id)
-    order = Order.objects.get(id=order_id)
-    order.update_after_pay()
+    order_id = session.metadata.order_id
+    try:
+        order = Order.objects.get(id=order_id, status=Order.CREATED)
+        baskets = Basket.objects.filter(user=order.initiator)
+        order.status = Order.PAID
+        order.update_after_pay(baskets)
+        order.save()
+        baskets.delete()
+    except Order.DoesNotExist:
+        pass
