@@ -1,0 +1,158 @@
+Конечно! Вот пример CSS-стилей для созданной разметки корзины:
+
+```css
+/* Общий стиль для страницы корзины */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f5f5f5;
+}
+
+.wrap {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.projTitle {
+  font-size: 30px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.cart-wrap {
+  display: flex;
+  justify-content: space-between;
+}
+
+.cart {
+  flex-grow: 1;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 5px;
+}
+
+.cart-items {
+  list-style-type: none;
+  padding: 0;
+}
+
+.cart-item {
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 10px;
+  margin-bottom: 10px;
+}
+
+.item-info {
+  display: flex;
+  flex-grow: 1;
+}
+
+.item-img img {
+  max-width: 250px;
+  height: auto;
+}
+
+.item-details {
+  margin-left: 10px;
+}
+
+.item-details h3 {
+  margin: 0;
+  font-size: 18px;
+}
+
+.item-quantity {
+  margin-top: 10px;
+}
+
+.item-quantity input {
+  width: 40px;
+  padding: 5px;
+}
+
+.item-total p {
+  margin: 0;
+  font-weight: bold;
+}
+
+.item-remove a {
+  color: #ff0000;
+  text-decoration: none;
+}
+
+.cart-total {
+  background-color: #f5f5f5;
+  padding: 20px;
+  border-radius: 5px;
+  flex-shrink: 0;
+  margin-left: 20px;
+}
+
+.total-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.total-row.final {
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.order-button {
+  text-align: center;
+}
+
+.order-button .btn {
+  background-color: #007bff;
+  color: #fff;
+  padding: 10px 20px;
+  text-decoration: none;
+  border-radius: 5px;
+}
+
+.order-button .btn:hover {
+  background-color: #0056b3;
+}
+
+/* Дополнительные стили для мобильных устройств */
+@media (max-width: 767px) {
+  .wrap {
+    padding: 10px;
+  }
+
+  .projTitle {
+    font-size: 24px;
+  }
+
+  .heading {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .cart-wrap {
+    flex-direction: column;
+  }
+
+  .cart {
+    margin-top: 20px;
+  }
+
+  .cart-total {
+    margin-top: 20px;
+    margin-left: 0;
+  }
+
+  .order-button .btn {
+    width: 100%;
+  }
+}
