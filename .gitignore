@@ -2,6 +2,5 @@
 db.sqlite3
 media
 .env
-static
 venv
 **/__pycache__/
