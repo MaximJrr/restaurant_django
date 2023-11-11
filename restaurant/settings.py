@@ -182,6 +182,7 @@ EMAIL_USE_SSL = True
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
     'allauth.account.auth_backends.AuthenticationBackend',
+    'users.authentication.EmailAuthenticate',
 ]
 
 SITE_ID = 1
