@@ -1,4 +1,5 @@
 from django import forms
+from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.core.exceptions import ValidationError
 
@@ -8,13 +9,27 @@ from users.tasks import send_email_verification
 
 class UserLoginForm(AuthenticationForm):
     username = forms.CharField(widget=forms.TextInput(attrs={
-        'class': 'form-control py 4', 'placeholder': 'Введите имя пользователя или email'}))
-    password = forms.CharField(widget=forms.TextInput(attrs={
+        'class': 'form-control py 4', 'placeholder': 'Введите имя пользователя или e-mail'}))
+    password = forms.CharField(widget=forms.PasswordInput(attrs={
         'class': 'form-control py 4', 'placeholder': 'Введите пароль'}))
 
     class Meta:
         model = User
         fields = ['username', 'password']
+
+    def clean_username(self):
+        username = self.cleaned_data['username']
+
+        if not get_user_model().objects.filter(username=username).exists():
+            raise ValidationError("Неверное имя пользователя или e-mail!")
+        return username
+
+    def clean_password(self):
+        password = self.cleaned_data['password']
+
+        if not get_user_model().objects.filter(password=password).exists():
+            raise ValidationError("Неверный пароль!")
+        return password
 
 
 class UserRegistrationForm(UserCreationForm):
