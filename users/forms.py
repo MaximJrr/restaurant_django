@@ -8,7 +8,7 @@ from users.tasks import send_email_verification
 
 class UserLoginForm(AuthenticationForm):
     username = forms.CharField(widget=forms.TextInput(attrs={
-        'class': 'form-control py 4', 'placeholder': 'Введите имя пользователя'}))
+        'class': 'form-control py 4', 'placeholder': 'Введите имя пользователя или email'}))
     password = forms.CharField(widget=forms.TextInput(attrs={
         'class': 'form-control py 4', 'placeholder': 'Введите пароль'}))
 
