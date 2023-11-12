@@ -101,3 +101,37 @@ class ReservationForm(forms.ModelForm):
         if how_many_people > 10 or how_many_people < 1:
             raise ValidationError("Мимальное кол-во мест 1, максимальное 10")
         return how_many_people
+
+
+class UserProfileForm(forms.ModelForm):
+    username = forms.CharField(disabled=True, label='Логин', widget=forms.TextInput(attrs={
+        'class': 'form-control py 4', 'style': 'color: black'}))
+    email = forms.CharField(disabled=True, label='E-mail', widget=forms.TextInput(attrs={
+        'class': 'form-control py 4', 'style': 'color: black'}))
+
+    class Meta:
+        model = get_user_model()
+        fields = ['username', 'email', 'first_name', 'last_name']
+        labels = {
+            'first_name': 'Имя',
+            'last_name': 'Фамилия'
+        }
+
+        widgets = {
+            'first_name': forms.TextInput(attrs={'class': 'form-control py 4'}),
+            'last_name': forms.TextInput(attrs={'class': 'form-control py 4'})
+        }
+
+    def clean_first_name(self):
+        first_name = self.cleaned_data['first_name']
+
+        if len(''.join(first_name)) > 20:
+            raise ValidationError("Длина имени не должна превышать 20 символов")
+        return first_name
+
+    def clean_last_name(self):
+        last_name = self.cleaned_data['last_name']
+
+        if len(''.join(last_name)) > 20:
+            raise ValidationError("Длина фамилии не должна превыщать 20 символов")
+        return last_name
