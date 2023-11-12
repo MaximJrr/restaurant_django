@@ -1,13 +1,14 @@
 from django.contrib import auth
+from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse, reverse_lazy
 from django.views.generic import TemplateView
-from django.views.generic.edit import CreateView
+from django.views.generic.edit import CreateView, UpdateView
 
-from users.forms import UserLoginForm, UserRegistrationForm, ReservationForm
+from users.forms import UserLoginForm, UserRegistrationForm, ReservationForm, UserProfileForm
 from users.models import EmailVerification, User, Reservation
 
 
@@ -76,3 +77,15 @@ class BasketView(TemplateView):
 def logout(request):
     auth.logout(request)
     return HttpResponseRedirect(reverse('index'))
+
+
+class UserProfileView(UpdateView):
+    template_name = 'users/profile.html'
+    extra_context = {'title': 'Профиль'}
+    form_class = UserProfileForm
+
+    def get_success_url(self):
+        return reverse_lazy('users:profile')
+
+    def get_object(self, queryset=None):
+        return self.request.user
