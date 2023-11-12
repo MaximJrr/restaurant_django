@@ -14,7 +14,7 @@
                         <li><a href="contact.html">Контакты</a></li>
                         {% if user.is_authenticated %}
                             <li class="has-dropdown">
-                                <a href="/">{{ user.username }}</a>
+                                <a href="{% url 'users:profile' %}">{{ user.username }}</a>
                                 <ul class="dropdown">
                                     <li><a href="{% url 'users:basket' %}">Корзина</a></li>
                                     <li><a href="{% url 'orders:orders-list' %}">Мои заказы</a></li>

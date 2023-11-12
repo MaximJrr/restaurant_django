@@ -1,0 +1,51 @@
+{% extends 'dishes/base.html' %}
+{% block inscription %}
+	<h1>Профиль</h1>
+{% endblock %}
+
+{% block content %}
+	<div id="fh5co-reservation-form" class="fh5co-section">
+		<div class="container">
+			<div class="row">
+
+				<div class="col-md-6 col-md-push-6 col-sm-6 col-sm-push-6">
+					<form method="post">
+						{% csrf_token %}
+						<div class="row form-group">
+							<div class="col-md-12">
+								<label for="{{ form.username.id_for_label }}">Логин:</label>
+								{{ form.username }}
+							</div>
+						</div>
+						<div class="row form-group">
+							<div class="col-md-12">
+								<label for="{{ form.email.id_for_label }}">E-mail:</label>
+								{{ form.email }}
+							</div>
+						</div>
+						<div class="row form-group">
+							<div class="col-md-12">
+								<label for="{{ form.first_name.id_for_label }}">Имя:</label>
+								{{ form.first_name }}
+								{{ form.first_name.errors }}
+							</div>
+						</div>
+						<div class="row form-group">
+							<div class="col-md-12">
+								<label for="{{ form.last_name.id_for_label }}">Фамилия:</label>
+								{{ form.last_name }}
+								{{ form.last_name.errors }}
+							</div>
+						</div>
+						<div class="row form-group">
+							<div class="col-md-12">
+								<input type="submit" class="btn btn-primary btn-outline btn-lg" value="Сохранить">
+							</div>
+						</div>
+
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}
