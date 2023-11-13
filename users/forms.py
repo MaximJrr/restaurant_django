@@ -133,5 +133,5 @@ class UserProfileForm(forms.ModelForm):
         last_name = self.cleaned_data['last_name']
 
         if len(''.join(last_name)) > 20:
-            raise ValidationError("Длина фамилии не должна превыщать 20 символов")
+            raise ValidationError("Длина фамилии не должна превышать 20 символов")
         return last_name
