@@ -87,12 +87,37 @@ class UserRegistrationTest(TestCase):
 class UserLoginTest(TestCase):
     def setUp(self):
         self.path = reverse('users:login')
+        get_user_model().objects.create_user(username='test_user', password='test_password', email='test_email@gmail.com')
+        self.data = {
+            'username': 'test_user',
+            'password': 'test_password'
+        }
 
     def test_user_login_get(self):
         response = self.client.get(self.path)
 
         self.assertEqual(response.status_code, HTTPStatus.OK)
         self.assertTemplateUsed(response, 'users/login.html')
+
+    def test_valid_data(self):
+        response = self.client.post(self.path, self.data)
+
+        self.assertEqual(response.status_code, HTTPStatus.FOUND)
+        self.assertRedirects(response, reverse('index'))
+
+    def test_invalid_user_name_or_email(self):
+        self.data['username'] = 'invalid_user'
+        response = self.client.post(self.path, self.data)
+
+        self.assertEqual(response.status_code, HTTPStatus.OK)
+        self.assertContains(response, "Неверное имя пользователя или e-mail!", html=True)
+
+    def test_invalid_password(self):
+        self.data['password'] = 'invalid_password'
+        response = self.client.post(self.path, self.data)
+
+        self.assertEqual(response.status_code, HTTPStatus.OK)
+        self.assertContains(response, "Ошибка аутентификации. Пожалуйста, проверьте введенные данные.", html=True)
 
 
 class UserReservationVerificationTest(TestCase):
