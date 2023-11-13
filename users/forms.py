@@ -24,13 +24,6 @@ class UserLoginForm(AuthenticationForm):
             raise ValidationError("Неверное имя пользователя или e-mail!")
         return username
 
-    def clean_password(self):
-        password = self.cleaned_data['password']
-
-        if not get_user_model().objects.filter(password=password).exists():
-            raise ValidationError("Неверный пароль!")
-        return password
-
 
 class UserRegistrationForm(UserCreationForm):
     first_name = forms.CharField(widget=forms.TextInput(attrs={
