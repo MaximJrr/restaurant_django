@@ -1,6 +1,6 @@
 from unittest.mock import patch
 
-from django.conf import settings
+from django.contrib.auth import get_user_model
 from django.test import TestCase
 from django.urls import reverse
 from http import HTTPStatus
@@ -155,6 +155,44 @@ class EmailVerificationTest(TestCase):
         self.assertTemplateUsed(self.response, 'users/email_verification.html')
         self.user.refresh_from_db()
         self.assertTrue(self.user.is_verified_email)
+
+
+class UserProfileTest(TestCase):
+    def setUp(self):
+        get_user_model().objects.create_user(username='test_user', email='test@example.com',
+                                                         password='test_password')
+        self.client.login(username='test_user', password='test_password')
+        self.data = {
+            'first_name': 'test_user',
+            'last_name': 'test_last_name'
+        }
+        self.path = reverse('users:profile')
+
+    def test_form_get(self):
+        response = self.client.get(self.path)
+
+        self.assertEqual(response.status_code, HTTPStatus.OK)
+        self.assertTemplateUsed(response, 'users/profile.html')
+
+    def test_valid_data(self):
+        response = self.client.post(self.path, self.data)
+
+        self.assertEqual(response.status_code, HTTPStatus.FOUND)
+        self.assertRedirects(response, reverse('users:profile'))
+
+    def test_invalid_first_name(self):
+        self.data['first_name'] = 'q' * 21
+        response = self.client.post(self.path, self.data)
+
+        self.assertEqual(response.status_code, HTTPStatus.OK)
+        self.assertContains(response, "Длина имени не должна превышать 20 символов", html=True)
+
+    def invalid_last_name(self):
+        self.data['last_name'] = 'q' * 21
+        response = self.client.post(self.path, self.data)
+
+        self.assertEqual(response.status_code, HTTPStatus.OK)
+        self.assertContains(response, "Длина фамилии не должна превышать 20 символов", html=True)
 
 
 # orders app views
