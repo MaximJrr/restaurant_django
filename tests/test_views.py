@@ -30,7 +30,7 @@ class DishesListViewTest(TestCase):
     fixtures = ['dishes.json', 'dishes_categories.json']
 
     def test_dishes_list(self):
-        path = reverse('dishes:index')
+        path = reverse('dishes:menu')
         response = self.client.get(path)
         dishes = Dish.objects.all()[:9]
 
@@ -83,11 +83,47 @@ class UserRegistrationTest(TestCase):
         self.assertEqual(response.status_code, HTTPStatus.OK)
         self.assertContains(response, 'Пользователь с таким именем уже существует.', html=True)
 
+    def test_first_name_contains_digit(self):
+        self.data['first_name'] = 'test1'
+        response = self.client.post(self.path, self.data)
+
+        self.assertEqual(response.status_code, HTTPStatus.OK)
+        self.assertContains(response, "Имя не должно содержать цифры")
+
+    def test_last_name_contains_digit(self):
+        self.data['last_name'] = 'test1'
+        response = self.client.post(self.path, self.data)
+
+        self.assertEqual(response.status_code, HTTPStatus.OK)
+        self.assertContains(response, "Фамилия не должна содержать цифры")
+
+    def test_invalid_length_password(self):
+        self.data['password1'] = 'tr'
+        self.data['password2'] = 'tr'
+        response = self.client.post(self.path, self.data)
+
+        self.assertEqual(response.status_code, HTTPStatus.OK)
+        self.assertContains(
+            response, "Введённый пароль слишком короткий. Он должен содержать как минимум 8 символов."
+        )
+
+    def test_passwords_not_equal(self):
+        self.data['password1'] = 'test_password'
+        self.data['password2'] = 'test_password1'
+        response = self.client.post(self.path, self.data)
+
+        self.assertEqual(response.status_code, HTTPStatus.OK)
+        self.assertContains(response, "Введенные пароли не совпадают.")
+
 
 class UserLoginTest(TestCase):
     def setUp(self):
         self.path = reverse('users:login')
-        get_user_model().objects.create_user(username='test_user', password='test_password', email='test_email@gmail.com')
+        get_user_model().objects.create_user(
+            username='test_user',
+            password='test_password',
+            email='test_email@gmail.com'
+        )
         self.data = {
             'username': 'test_user',
             'password': 'test_password'
@@ -339,7 +375,7 @@ class OrderCreateTest(TestCase):
         path = reverse('orders:order-create')
         response = self.client.post(path, data)
 
-        self.assertEqual(response.status_code, HTTPStatus.SEE_OTHER)
+        self.assertEqual(response.status_code, HTTPStatus.FOUND)
         self.assertEqual(Order.objects.count(), 1)
         created_order = Order.objects.first()
         self.assertEqual(created_order.initiator, self.user)
