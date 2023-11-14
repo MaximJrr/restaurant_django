@@ -11,6 +11,9 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 import os
 from pathlib import Path
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -19,7 +22,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-=92bkulrpv7-+_^oieme)!)1pbs=g5!brqsy_=_ad*k8dhcq@%'
+SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -107,11 +110,11 @@ CACHES = {
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'restaurant_db',
-        'USER': 'restaurant_username',
-        'PASSWORD': 'OrigiN237',
-        'HOST': 'localhost',
-        'PORT': 5432,
+        'NAME': os.environ.get('DB_NAME'),
+        'USER': os.environ.get('DB_USER'),
+        'PASSWORD': os.environ.get('DB_PASSWORD'),
+        'HOST': os.environ.get('DB_HOST'),
+        'PORT': os.environ.get('DB_PORT'),
     }
 }
 
@@ -172,12 +175,12 @@ LOGOUT_REDIRECT_URL = '/'
 
 # Sending emails
 
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.yandex.ru'
-EMAIL_PORT = 465
-EMAIL_HOST_USER = 'maximchukavovm@yandex.ru'
-EMAIL_HOST_PASSWORD = 'OrigiN237'
-EMAIL_USE_SSL = True
+EMAIL_BACKEND = os.environ.get('EMAIL_BACKEND')
+EMAIL_HOST = os.environ.get('EMAIL_HOST')
+EMAIL_PORT = os.environ.get('EMAIL_PORT')
+EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
+EMAIL_USE_SSL = os.environ.get('EMAIL_USE_SSL')
 
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
@@ -202,9 +205,9 @@ CELERY_RESULT_BACKEND = 'redis://127.0.0.1:6379'
 
 # Stripe
 
-STRIPE_PUBLIC_KEY = 'pk_test_51MQVagBWxgf1nsIVutvgGtUCZabpjsHsAFkizw2CJHlCtKxOwutbMDNGSTQwgw8mVEFWNYTdy3BinKYmWlzLikrM00U071nLO8'
-STRIPE_SECRET_KEY = 'sk_test_51MQVagBWxgf1nsIVBmaaUHSqPLSCDS7JAFUQs4HC9VHGE6cfDZidB4vHLTWEAyde0QQ2dBlVbvyNzge1jeKI2fYD00STGM0aUo'
-STRIPE_WEBHOOK_SECRET_KEY = 'whsec_a001f6aab5339d09ad4db04c81c2c2dd45af99626dff1456bc3f5361599eee12'
+STRIPE_PUBLIC_KEY = os.environ.get('STRIPE_PUBLIC_KEY')
+STRIPE_SECRET_KEY = os.environ.get('STRIPE_SECRET_KEY')
+STRIPE_WEBHOOK_SECRET_KEY = os.environ.get('STRIPE_WEBHOOK_SECRET_KEY')
 
 # Rest
 
@@ -218,4 +221,3 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.IsAuthenticated',
     ]
 }
-

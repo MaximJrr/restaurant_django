@@ -26,10 +26,10 @@ class UserLoginForm(AuthenticationForm):
 
 
 class UserRegistrationForm(UserCreationForm):
-    first_name = forms.CharField(widget=forms.TextInput(attrs={
-        'class': 'form-control py 4', 'placeholder': 'Введите имя'}))
-    last_name = forms.CharField(widget=forms.TextInput(attrs={
-        'class': 'form-control py 4', 'placeholder': 'Введите фамилию'}))
+    first_name = forms.CharField(min_length=2, max_length=20, widget=forms.TextInput(attrs={
+        'class': 'form-control py 4', 'placeholder': 'Введите имя', 'render_value': False,}))
+    last_name = forms.CharField(min_length=2, max_length=20, widget=forms.TextInput(attrs={
+        'class': 'form-control py 4', 'placeholder': 'Введите фамилию', 'render_value': False,}))
     username = forms.CharField(widget=forms.TextInput(attrs={
         'class': 'form-control py 4', 'placeholder': 'Введите имя пользователя'}))
     email = forms.CharField(widget=forms.EmailInput(attrs={
@@ -48,15 +48,29 @@ class UserRegistrationForm(UserCreationForm):
         send_email_verification.delay(user.id)
         return user
 
+    def clean_first_name(self):
+        first_name = self.cleaned_data['first_name']
+
+        if any(char.isdigit() for char in first_name):
+            raise ValidationError("Имя не должно содержать цифры")
+        return first_name
+
+    def clean_last_name(self):
+        last_name = self.cleaned_data['last_name']
+
+        if any(char.isdigit() for char in last_name):
+            raise ValidationError("Фамилия не должна содержать цифры")
+        return last_name
+
 
 class ReservationForm(forms.ModelForm):
     name = forms.CharField(
         min_length=2,
         error_messages={
-            'min_length': 'Минимальная длина имени - 2 символа'
+            'min_length': 'Минимальная длина имени 2 символа'
         },
         widget=forms.TextInput(attrs={
-        'class': 'form-control py 4', 'placeholder': 'Введите имя'})
+            'class': 'form-control py 4', 'placeholder': 'Введите имя'})
     )
     how_many_people = forms.IntegerField(widget=forms.NumberInput(attrs={
         'class': 'form-control py 4', 'placeholder': 'Введите кол-во гостей'}))
