@@ -158,6 +158,34 @@ class UserReservationTest(TestCase):
             response, 'Данное место на указанное время уже занято, выберите другое место, или время'
         )
 
+    def test_name_contains_nums(self):
+        self.data['name'] = 123213
+        response = self.client.post(self.path, self.data)
+
+        self.assertEqual(response.status_code, HTTPStatus.OK)
+        self.assertContains(response, "Имя может содержать только английские, или русские буквы", html=True)
+
+    def test_name_contains_one_char(self):
+        self.data['name'] = 'q'
+        response = self.client.post(self.path, self.data)
+
+        self.assertEqual(response.status_code, HTTPStatus.OK)
+        self.assertContains(response, "Минимальная длина имени 2 символа", html=True)
+
+    def test_invalid_table_number(self):
+        self.data['table_number'] = 11
+        response = self.client.post(self.path, self.data)
+
+        self.assertEqual(response.status_code, HTTPStatus.OK)
+        self.assertContains(response, "Пожалуйста, выберите номер столика от 1 до 10", html=True)
+
+    def test_invalid_how_many_people(self):
+        self.data['how_many_people'] = 11
+        response = self.client.post(self.path, self.data)
+
+        self.assertEqual(response.status_code, HTTPStatus.OK)
+        self.assertContains(response, "Мимальное кол-во мест 1, максимальное 10", html=True)
+
 
 class EmailVerificationTest(TestCase):
     def setUp(self):
