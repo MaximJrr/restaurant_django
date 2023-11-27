@@ -1,2 +1,2 @@
 # restaurant-on-django
-project
+
